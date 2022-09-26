@@ -4,7 +4,7 @@ on:
     branches: 
     - main
 jobs:
-  Do-the-travis-thing:
+  Do-the-actions-thing:
     runs-on: ubuntu-20.04 #or ubuntu-latest
     # services:
     #   mysql:
