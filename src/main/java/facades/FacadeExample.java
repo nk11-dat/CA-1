@@ -13,6 +13,7 @@ import utils.EMF_Creator;
 /**
  *
  * Rename Class to a relevant name Add add relevant facade methods
+ * 2nd commit
  */
 public class FacadeExample {
 
