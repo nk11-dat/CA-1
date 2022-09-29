@@ -1,4 +1,4 @@
-GET http://localhost:8080/devops_starter_war_exploded/api/xxx
+GET http://localhost:8080/devops-starter/api/person
 
 ###
 POST http://localhost:8080/hobbies/api/xxx
@@ -9,8 +9,13 @@ Content-Type: application/json
 
 ###
 POST https://www.sem3nicki.dk/hobbies/person/
+#POST http://localhost:8080/devops-starter/api/person
 Content-Type: application/json
 
 {
 
 }
+
+###
+GET http://localhost:8080/hobbies/api/person/all
+Content-Type: application/json

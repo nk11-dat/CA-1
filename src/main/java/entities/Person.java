@@ -16,10 +16,6 @@ public class Person
     @Column(name = "idPERSON", nullable = false)
     private Integer id;
 
-    @MapsId
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idPERSON", nullable = false)
-    private Address address;
 
     @Size(max = 45)
     @NotNull
@@ -54,18 +50,23 @@ public class Person
             inverseJoinColumns = @JoinColumn(name = "HOBBY_idHOBBY"))
     private Set<Hobby> hobbies = new LinkedHashSet<>();
 
+    @MapsId
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "idPERSON", nullable = false)
+    private Address address;
+
     public Person()
     {
     }
 
     public Person(Address address, String firstName, String lastName, Integer age, String gender, String email)
     {
-        this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
         this.email = email;
+        this.address = address;
     }
 
     public Person(Address address, String firstName, String lastName, Integer age, String gender, String email, Set<Phone> phones, Set<Hobby> hobbies)

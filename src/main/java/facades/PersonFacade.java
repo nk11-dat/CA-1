@@ -78,11 +78,11 @@ public class PersonFacade
         }
     }
     
-    public List<RenameMeDTO> getAll(){
+    public List<PersonDTO> getAll(){
         EntityManager em = emf.createEntityManager();
-        TypedQuery<RenameMe> query = em.createQuery("SELECT r FROM RenameMe r", RenameMe.class);
-        List<RenameMe> rms = query.getResultList();
-        return RenameMeDTO.getDtos(rms);
+        TypedQuery<Person> query = em.createQuery("SELECT r FROM Person r", Person.class);
+        List<Person> rms = query.getResultList();
+        return PersonDTO.getDTOs(rms);
     }
     
     public static void main(String[] args) {
