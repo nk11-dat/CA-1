@@ -17,7 +17,7 @@ public class Person
     private Integer id;
 
     @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idPERSON", nullable = false)
     private Address address;
 

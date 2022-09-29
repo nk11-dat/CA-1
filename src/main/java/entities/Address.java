@@ -30,8 +30,8 @@ public class Address
     @JoinColumn(name = "idCITY", nullable = false)
     private Cityinfo idCITY;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "address")
-    private Person person;
+    @OneToMany(mappedBy = "address")
+    private Set<Person> persons = new LinkedHashSet<>();
 
     @ManyToMany
     @JoinTable(name = "HOBBY_has_ADDRESS",
@@ -43,20 +43,20 @@ public class Address
     {
     }
 
-    public Address(String street, String aditionalInfo, Cityinfo idCITY, Person person)
+    public Address(String street, String aditionalInfo, Cityinfo idCITY, Set<Person> persons)
     {
         this.street = street;
         this.aditionalInfo = aditionalInfo;
         this.idCITY = idCITY;
-        this.person = person;
+        this.persons = persons;
     }
 
-    public Address(String street, String aditionalInfo, Cityinfo idCITY, Person person, Set<Hobby> hobbies)
+    public Address(String street, String aditionalInfo, Cityinfo idCITY, Set<Person> persons, Set<Hobby> hobbies)
     {
         this.street = street;
         this.aditionalInfo = aditionalInfo;
         this.idCITY = idCITY;
-        this.person = person;
+        this.persons = persons;
         this.hobbies = hobbies;
     }
 
@@ -100,14 +100,14 @@ public class Address
         this.idCITY = idCITY;
     }
 
-    public Person getPerson()
+    public Set<Person> getPerson()
     {
-        return person;
+        return persons;
     }
 
-    public void setPerson(Person person)
+    public void setPerson(Set<Person> person)
     {
-        this.person = person;
+        this.persons = person;
     }
 
     public Set<Hobby> getHobbies()
@@ -143,7 +143,7 @@ public class Address
                 ", street='" + street + '\'' +
                 ", aditionalInfo='" + aditionalInfo + '\'' +
                 ", idCITY=" + idCITY +
-                ", person=" + person +
+                ", person=" + persons +
                 ", hobbies=" + hobbies +
                 '}';
     }
