@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -52,6 +53,32 @@ public class Person
             joinColumns = @JoinColumn(name = "PERSON_idPERSON"),
             inverseJoinColumns = @JoinColumn(name = "HOBBY_idHOBBY"))
     private Set<Hobby> hobbies = new LinkedHashSet<>();
+
+    public Person()
+    {
+    }
+
+    public Person(Address address, String firstName, String lastName, Integer age, String gender, String email)
+    {
+        this.address = address;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.email = email;
+    }
+
+    public Person(Address address, String firstName, String lastName, Integer age, String gender, String email, Set<Phone> phones, Set<Hobby> hobbies)
+    {
+        this.address = address;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.email = email;
+        this.phones = phones;
+        this.hobbies = hobbies;
+    }
 
     public Integer getId()
     {
@@ -143,4 +170,34 @@ public class Person
         this.hobbies = hobbies;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Person{" +
+                "id=" + id +
+                ", address=" + address +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", phones=" + phones +
+                ", hobbies=" + hobbies +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return getId().equals(person.getId()) && getAddress().equals(person.getAddress()) && getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName()) && getAge().equals(person.getAge()) && getGender().equals(person.getGender()) && getEmail().equals(person.getEmail());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getId(), getAddress(), getFirstName(), getLastName(), getAge(), getGender(), getEmail());
+    }
 }

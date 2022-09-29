@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -27,6 +28,23 @@ public class Cityinfo
 
     @OneToMany(mappedBy = "idCITY")
     private Set<Address> addresses = new LinkedHashSet<>();
+
+    public Cityinfo()
+    {
+    }
+
+    public Cityinfo(String city, String zipcode)
+    {
+        this.city = city;
+        this.zipcode = zipcode;
+    }
+
+    public Cityinfo(String city, String zipcode, Set<Address> addresses)
+    {
+        this.city = city;
+        this.zipcode = zipcode;
+        this.addresses = addresses;
+    }
 
     public Integer getId()
     {
@@ -68,4 +86,29 @@ public class Cityinfo
         this.addresses = addresses;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Cityinfo{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", addresses=" + addresses +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Cityinfo)) return false;
+        Cityinfo cityinfo = (Cityinfo) o;
+        return getId().equals(cityinfo.getId()) && getCity().equals(cityinfo.getCity()) && getZipcode().equals(cityinfo.getZipcode());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getId(), getCity(), getZipcode());
+    }
 }

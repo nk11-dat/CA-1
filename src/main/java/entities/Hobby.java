@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -46,6 +47,28 @@ public class Hobby
             joinColumns = @JoinColumn(name = "HOBBY_idHOBBY"),
             inverseJoinColumns = @JoinColumn(name = "ADDRESS_idADDRESS"))
     private Set<Address> addresses = new LinkedHashSet<>();
+
+    public Hobby()
+    {
+    }
+
+    public Hobby(String name, String wikiLink, String category, String type)
+    {
+        this.name = name;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
+    }
+
+    public Hobby(String name, String wikiLink, String category, String type, Set<Person> people, Set<Address> addresses)
+    {
+        this.name = name;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
+        this.people = people;
+        this.addresses = addresses;
+    }
 
     public Integer getId()
     {
@@ -117,4 +140,32 @@ public class Hobby
         this.addresses = addresses;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Hobby{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", wikiLink='" + wikiLink + '\'' +
+                ", category='" + category + '\'' +
+                ", type='" + type + '\'' +
+                ", people=" + people +
+                ", addresses=" + addresses +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Hobby)) return false;
+        Hobby hobby = (Hobby) o;
+        return getId().equals(hobby.getId()) && getName().equals(hobby.getName()) && getWikiLink().equals(hobby.getWikiLink()) && getCategory().equals(hobby.getCategory()) && getType().equals(hobby.getType());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getId(), getName(), getWikiLink(), getCategory(), getType());
+    }
 }

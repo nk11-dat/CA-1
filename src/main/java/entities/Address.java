@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -37,6 +38,27 @@ public class Address
             joinColumns = @JoinColumn(name = "ADDRESS_idADDRESS"),
             inverseJoinColumns = @JoinColumn(name = "HOBBY_idHOBBY"))
     private Set<Hobby> hobbies = new LinkedHashSet<>();
+
+    public Address()
+    {
+    }
+
+    public Address(String street, String aditionalInfo, Cityinfo idCITY, Person person)
+    {
+        this.street = street;
+        this.aditionalInfo = aditionalInfo;
+        this.idCITY = idCITY;
+        this.person = person;
+    }
+
+    public Address(String street, String aditionalInfo, Cityinfo idCITY, Person person, Set<Hobby> hobbies)
+    {
+        this.street = street;
+        this.aditionalInfo = aditionalInfo;
+        this.idCITY = idCITY;
+        this.person = person;
+        this.hobbies = hobbies;
+    }
 
     public Integer getId()
     {
@@ -98,4 +120,31 @@ public class Address
         this.hobbies = hobbies;
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Address)) return false;
+        Address address = (Address) o;
+        return getId().equals(address.getId()) && getStreet().equals(address.getStreet()) && Objects.equals(getAditionalInfo(), address.getAditionalInfo()) && getIdCITY().equals(address.getIdCITY());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getId(), getStreet(), getAditionalInfo(), getIdCITY());
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Address{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", aditionalInfo='" + aditionalInfo + '\'' +
+                ", idCITY=" + idCITY +
+                ", person=" + person +
+                ", hobbies=" + hobbies +
+                '}';
+    }
 }
