@@ -132,7 +132,6 @@ public class PersonDTO implements Serializable
                 "phones = " + phones + ", " +
                 "hobbies = " + hobbies + ")";
     }
-
     public static List<PersonDTO> getDTOs(List<Person> movies)
     {
         List<PersonDTO> movieDTOList = new ArrayList<>();
@@ -193,6 +192,8 @@ public class PersonDTO implements Serializable
                     Objects.equals(this.idCITY, entity.idCITY);
         }
 
+
+
         @Override
         public int hashCode()
         {
@@ -206,6 +207,12 @@ public class PersonDTO implements Serializable
                     "street = " + street + ", " +
                     "aditionalInfo = " + aditionalInfo + ", " +
                     "idCITY = " + idCITY + ")";
+        }
+        public static Address getDTOs(AddressDTO addressDTO)
+        {
+            Address a = new Address(addressDTO.getStreet(),addressDTO.getAditionalInfo(),
+                    new Cityinfo(addressDTO.getIdCITY().getCity(),addressDTO.getIdCITY().zipcode));
+            return a;
         }
 
         /**

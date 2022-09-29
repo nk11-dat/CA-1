@@ -1,6 +1,8 @@
 package facades;
 
+import dtos.PersonDTO;
 import dtos.RenameMeDTO;
+import entities.Person;
 import entities.RenameMe;
 import utils.EMF_Creator;
 
@@ -41,8 +43,9 @@ public class PersonFacade
         return emf.createEntityManager();
     }
     
-    public RenameMeDTO create(RenameMeDTO rm){
-        RenameMe rme = new RenameMe(rm.getDummyStr1(), rm.getDummyStr2());
+    public PersonDTO create(PersonDTO rm){
+
+        Person rme = new Person(rm.getAddress(), rm.getFirstName(), rm.getLastName(), rm.getAge(),rm.getGender(),rm.getEmail());
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -51,8 +54,9 @@ public class PersonFacade
         } finally {
             em.close();
         }
-        return new RenameMeDTO(rme);
+        return new PersonDTO(rme);
     }
+
     public RenameMeDTO getById(long id) { //throws RenameMeNotFoundException {
         EntityManager em = emf.createEntityManager();
         RenameMe rm = em.find(RenameMe.class, id);

@@ -51,6 +51,13 @@ public class Address
         this.persons = persons;
     }
 
+    public Address(String street, String aditionalInfo, Cityinfo idCITY)
+    {
+        this.street = street;
+        this.aditionalInfo = aditionalInfo;
+        this.idCITY = idCITY;
+    }
+
     public Address(String street, String aditionalInfo, Cityinfo idCITY, Set<Person> persons, Set<Hobby> hobbies)
     {
         this.street = street;
