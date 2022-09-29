@@ -26,7 +26,7 @@ public class Address
     private String aditionalInfo;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idCITY", nullable = false)
     private Cityinfo idCITY;
 

@@ -5,9 +5,12 @@
  */
 package facades;
 
-import dtos.RenameMeDTO;
-import entities.RenameMe;
 import javax.persistence.EntityManagerFactory;
+
+import dtos.PersonDTO;
+import entities.Address;
+import entities.Cityinfo;
+import entities.Person;
 import utils.EMF_Creator;
 
 /**
@@ -17,10 +20,15 @@ import utils.EMF_Creator;
 public class Populator {
     public static void populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        FacadeExample fe = FacadeExample.getFacadeExample(emf);
-        fe.create(new RenameMeDTO(new RenameMe("First 1", "Last 1")));
-        fe.create(new RenameMeDTO(new RenameMe("First 2", "Last 2")));
-        fe.create(new RenameMeDTO(new RenameMe("First 3", "Last 3")));
+//        FacadeExample fe = FacadeExample.getFacadeExample(emf);
+//        fe.create(new RenameMeDTO(new RenameMe("First 1", "Last 1")));
+//        fe.create(new RenameMeDTO(new RenameMe("First 2", "Last 2")));
+//        fe.create(new RenameMeDTO(new RenameMe("First 3", "Last 3")));
+        PersonFacade pf = PersonFacade.getInstance(emf);
+        //Address address, String firstName, String lastName, Integer age, String gender, String email, Set<Phone> phones, Set<Hobby> hobbies
+        Cityinfo ci = new Cityinfo("Testby", "6969");
+        Address a = new Address("Testgade 14", "Th.", ci);
+        pf.create(new PersonDTO(new Person(a, "Ib", "Ibsen", 69, "Male", "ib@Ibsen.com")));
     }
     
     public static void main(String[] args) {
