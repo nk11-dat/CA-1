@@ -36,6 +36,12 @@ public class Phone
         this.idPERSON = idPERSON;
     }
 
+    public Phone(String phoneNumber, String description)
+    {
+        this.phoneNumber = phoneNumber;
+        this.description = description;
+    }
+
     public Phone(String description, Person idPERSON)
     {
         this.description = description;

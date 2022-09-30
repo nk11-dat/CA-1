@@ -41,7 +41,7 @@ public class Person
     @Column(name = "email", nullable = false, length = 45)
     private String email;
 
-    @OneToMany(mappedBy = "idPERSON")
+    @OneToMany(mappedBy = "idPERSON", cascade = CascadeType.PERSIST)
     private Set<Phone> phones = new LinkedHashSet<>();
 
     @ManyToMany
@@ -78,6 +78,9 @@ public class Person
         this.gender = gender;
         this.email = email;
         this.phones = phones;
+//        for (Phone phone : phones) {
+//            phone.setIdPERSON(this);
+//        }
         this.hobbies = hobbies;
     }
 
@@ -182,21 +185,21 @@ public class Person
         this.hobbies = hobbies;
     }
 
-    @Override
-    public String toString()
-    {
-        return "Person{" +
-                "id=" + id +
-                ", address=" + address +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                ", email='" + email + '\'' +
-                ", phones=" + phones +
-                ", hobbies=" + hobbies +
-                '}';
-    }
+//    @Override
+//    public String toString()
+//    {
+//        return "Person{" +
+//                "id=" + id +
+//                ", address=" + address +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", age=" + age +
+//                ", gender='" + gender + '\'' +
+//                ", email='" + email + '\'' +
+//                ", phones=" + phones +
+//                ", hobbies=" + hobbies +
+//                '}';
+//    }
 
     @Override
     public boolean equals(Object o)
@@ -211,5 +214,17 @@ public class Person
     public int hashCode()
     {
         return Objects.hash(getId(), getAddress(), getFirstName(), getLastName(), getAge(), getGender(), getEmail());
+    }
+
+    public void addPhone(Phone mobil)
+    {
+        this.phones.add(mobil);
+        mobil.setIdPERSON(this);
+    }
+
+    public void addHobby(Hobby hobby)
+    {
+        this.hobbies.add(hobby);
+        hobby.getPeople().add(this);
     }
 }

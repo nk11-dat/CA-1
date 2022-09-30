@@ -32,15 +32,17 @@ public class Populator {
         Cityinfo ci = new Cityinfo("Testby", "6969");
         Address a = new Address("Testgade 14", "Th.", ci);
         HobbyDTO hd = hf.getById(12);
-        Hobby h = new Hobby(hd.getName(), hd.getWikiLink(), hd.getCategory(), hd.getType());
+//        Hobby h = new Hobby(hd.getName(), hd.getWikiLink(), hd.getCategory(), hd.getType());
         Set<Phone> ps = new HashSet<>();
-        Set<Hobby> hs = new HashSet<>();
-        hs.add(h);
+//        Set<Hobby> hs = new HashSet<>();
+//        hs.add(h);
         Person p = new Person(a,"Bo", "Bobsen", 45, "Male", "bo@bobsen.com");
-        Phone po = new Phone("420420420","Mobil", p);
-        ps.add(po);
-        p.setPhones(ps);
-        p.setHobbies(hs);
+        p.addPhone(new Phone("420420420","Mobil"));
+        p.addHobby(new Hobby(hd.getName(), hd.getWikiLink(), hd.getCategory(), hd.getType()));
+//        Phone po = new Phone("420420420","Mobil", p);
+//        ps.add(po);
+//        p.setPhones(ps);
+//        p.setHobbies(hs);
         pf.create(new PersonDTO(p));
     }
     public static void main(String[] args) {

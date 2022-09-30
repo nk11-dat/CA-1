@@ -2,16 +2,15 @@ package facades;
 
 import dtos.PersonDTO;
 import dtos.RenameMeDTO;
-import entities.Address;
-import entities.Cityinfo;
-import entities.Person;
-import entities.RenameMe;
+import entities.*;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -47,16 +46,30 @@ public class PersonFacade
     
     public PersonDTO create(PersonDTO rm){
 
-        Person rme = new Person(new Address(rm.getAddress().getStreet(), rm.getAddress().getAditionalInfo(), new Cityinfo(rm.getAddress().getIdCITY().getCity(), rm.getAddress().getIdCITY().getZipcode())), rm.getFirstName(), rm.getLastName(), rm.getAge(),rm.getGender(),rm.getEmail());
+//        Set<Phone> tempPhones = new LinkedHashSet<>();
+//
+//        Set<Hobby> tempHobbies = new LinkedHashSet<>();
+
+
+        Person person = new Person(new Address(rm.getAddress().getStreet(), rm.getAddress().getAditionalInfo(), new Cityinfo(rm.getAddress().getIdCITY().getCity(), rm.getAddress().getIdCITY().getZipcode())), rm.getFirstName(), rm.getLastName(), rm.getAge(),rm.getGender(),rm.getEmail());
+        for (PersonDTO.PhoneDTO phone : rm.getPhones()) {
+            person.addPhone(new Phone(phone.getPhoneNumber(), phone.getDescription()));
+        }
+        for (PersonDTO.HobbyDTO hobby : rm.getHobbies()) {
+            person.addHobby(new Hobby(hobby.getName(), hobby.getWikiLink(), hobby.getCategory(), hobby.getType()));
+        }
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(rme);
+            em.persist(person);
+            for (PersonDTO.HobbyDTO hobby : rm.getHobbies()) {
+                em.persist(new Hobby(hobby.getName(), hobby.getWikiLink(), hobby.getCategory(), hobby.getType()));
+            }
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new PersonDTO(rme);
+        return new PersonDTO(person);
     }
 
     public RenameMeDTO getById(long id) { //throws RenameMeNotFoundException {

@@ -5,10 +5,7 @@ import entities.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A DTO for the {@link Person} entity
@@ -53,9 +50,11 @@ public class PersonDTO implements Serializable
         this.gender = p.getGender();
         this.email = p.getEmail();
         this.address = new AddressDTO(p.getAddress());
-        p.getPhones().forEach((phoneEntity -> {
+        this.phones = new LinkedHashSet<>();
+        p.getPhones().forEach(phoneEntity -> {
             this.phones.add(new PhoneDTO(phoneEntity));
-        }));
+        });
+        this.hobbies = new LinkedHashSet<>();
         p.getHobbies().forEach(hobbyEntity -> {
             this.hobbies.add(new HobbyDTO(hobbyEntity));
         });
