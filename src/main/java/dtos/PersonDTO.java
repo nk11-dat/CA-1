@@ -1,9 +1,6 @@
 package dtos;
 
-import entities.Address;
-import entities.Cityinfo;
-import entities.Person;
-import entities.Phone;
+import entities.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -59,6 +56,9 @@ public class PersonDTO implements Serializable
         p.getPhones().forEach((phoneEntity -> {
             this.phones.add(new PhoneDTO(phoneEntity));
         }));
+        p.getHobbies().forEach(hobbyEntity -> {
+            this.hobbies.add(new HobbyDTO(hobbyEntity));
+        });
     }
 
     public AddressDTO getAddress()
@@ -358,6 +358,14 @@ public class PersonDTO implements Serializable
         @NotNull
         private final String type;
 
+        public HobbyDTO(Hobby h)
+        {
+            this.name = h.getName();
+            this.wikiLink = h.getWikiLink();
+            this.category = h.getCategory();
+            this.type = h.getType();
+        }
+
         public HobbyDTO(String name, String wikiLink, String category, String type)
         {
             this.name = name;
@@ -365,6 +373,8 @@ public class PersonDTO implements Serializable
             this.category = category;
             this.type = type;
         }
+
+
 
         public String getName()
         {
