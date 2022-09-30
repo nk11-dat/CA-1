@@ -81,6 +81,17 @@ public class Person
         this.hobbies = hobbies;
     }
 
+    public Person(Address address, String firstName, String lastName, Integer age, String gender, String email, Set<Hobby> hobbies)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.email = email;
+        this.hobbies = hobbies;
+        this.address = address;
+    }
+
     public java.lang.Integer getId()
     {
         return id;

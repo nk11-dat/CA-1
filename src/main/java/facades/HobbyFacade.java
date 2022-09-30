@@ -31,7 +31,7 @@ public class HobbyFacade
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static HobbyFacade getFacadeExample(EntityManagerFactory _emf) {
+    public static HobbyFacade getInstance(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new HobbyFacade();
@@ -84,7 +84,7 @@ public class HobbyFacade
     
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
-        HobbyFacade fe = getFacadeExample(emf);
+        HobbyFacade fe = getInstance(emf);
         fe.getAll().forEach(dto->System.out.println(dto));
     }
 

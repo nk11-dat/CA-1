@@ -14,7 +14,7 @@ public class Cityinfo
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCITY", nullable = false)
-    private Person id;
+    private Integer id;
 
     @Size(max = 45)
     @NotNull
@@ -46,12 +46,12 @@ public class Cityinfo
         this.addresses = addresses;
     }
 
-    public Person getId()
+    public Integer getId()
     {
         return id;
     }
 
-    public void setId(Person id)
+    public void setId(Integer id)
     {
         this.id = id;
     }
