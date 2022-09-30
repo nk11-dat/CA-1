@@ -1,6 +1,8 @@
 package facades;
 
+import dtos.HobbyDTO;
 import dtos.RenameMeDTO;
+import entities.Hobby;
 import entities.RenameMe;
 import utils.EMF_Creator;
 
@@ -53,12 +55,13 @@ public class HobbyFacade
         }
         return new RenameMeDTO(rme);
     }
-    public RenameMeDTO getById(long id) { //throws RenameMeNotFoundException {
+
+    public HobbyDTO getById(Integer id) { //throws RenameMeNotFoundException {
         EntityManager em = emf.createEntityManager();
-        RenameMe rm = em.find(RenameMe.class, id);
+        Hobby ho = em.find(Hobby.class, id);
 //        if (rm == null)
 //            throw new RenameMeNotFoundException("The RenameMe entity with ID: "+id+" Was not found");
-        return new RenameMeDTO(rm);
+        return new HobbyDTO(ho);
     }
     
     //TODO Remove/Change this before use

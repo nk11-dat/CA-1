@@ -8,10 +8,7 @@ package facades;
 import javax.persistence.EntityManagerFactory;
 
 import dtos.PersonDTO;
-import entities.Address;
-import entities.Cityinfo;
-import entities.Person;
-import entities.Phone;
+import entities.*;
 import utils.EMF_Creator;
 
 /**
