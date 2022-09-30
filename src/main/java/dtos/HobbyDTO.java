@@ -1,5 +1,7 @@
 package dtos;
 
+import entities.Person;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -99,7 +101,7 @@ public class HobbyDTO implements Serializable
     }
 
     /**
-     * A DTO for the {@link entities.Person} entity
+     * A DTO for the {@link Person} entity
      */
     public static class PersonDTO implements Serializable
     {
@@ -110,7 +112,7 @@ public class HobbyDTO implements Serializable
         @NotNull
         private final String lastName;
         @NotNull
-        private final Integer age;
+        private final Person age;
         @Size(max = 45)
         @NotNull
         private final String gender;
@@ -118,7 +120,7 @@ public class HobbyDTO implements Serializable
         @NotNull
         private final String email;
 
-        public PersonDTO(String firstName, String lastName, Integer age, String gender, String email)
+        public PersonDTO(String firstName, String lastName, Person age, String gender, String email)
         {
             this.firstName = firstName;
             this.lastName = lastName;
@@ -137,7 +139,7 @@ public class HobbyDTO implements Serializable
             return lastName;
         }
 
-        public Integer getAge()
+        public Person getAge()
         {
             return age;
         }

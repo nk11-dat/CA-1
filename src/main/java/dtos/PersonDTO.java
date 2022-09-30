@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * A DTO for the {@link entities.Person} entity
+ * A DTO for the {@link Person} entity
  */
 public class PersonDTO implements Serializable
 {
@@ -26,7 +26,7 @@ public class PersonDTO implements Serializable
     @NotNull
     private  String lastName;
     @NotNull
-    private  Integer age;
+    private java.lang.Integer age;
     @Size(max = 45)
     @NotNull
     private  String gender;
@@ -36,7 +36,7 @@ public class PersonDTO implements Serializable
     private  Set<PhoneDTO> phones;
     private  Set<HobbyDTO> hobbies;
 
-    public PersonDTO(AddressDTO address, String firstName, String lastName, Integer age, String gender, String email, Set<PhoneDTO> phones, Set<HobbyDTO> hobbies)
+    public PersonDTO(AddressDTO address, String firstName, String lastName, java.lang.Integer age, String gender, String email, Set<PhoneDTO> phones, Set<HobbyDTO> hobbies)
     {
         this.address = address;
         this.firstName = firstName;
@@ -56,7 +56,7 @@ public class PersonDTO implements Serializable
         this.gender = p.getGender();
         this.email = p.getEmail();
         this.address = new AddressDTO(p.getAddress());
-        this.phones = new PhoneDTO(p.getPhones());
+        this.phones = p.getPhones();
     }
 
     public AddressDTO getAddress()
@@ -74,7 +74,7 @@ public class PersonDTO implements Serializable
         return lastName;
     }
 
-    public Integer getAge()
+    public java.lang.Integer getAge()
     {
         return age;
     }
@@ -134,10 +134,10 @@ public class PersonDTO implements Serializable
                 "phones = " + phones + ", " +
                 "hobbies = " + hobbies + ")";
     }
-    public static List<PersonDTO> getDTOs(List<Person> movies)
+    public static List<PersonDTO> getDTOs(List<Person> p)
     {
         List<PersonDTO> movieDTOList = new ArrayList<>();
-        movies.forEach(m -> movieDTOList.add(new PersonDTO(m)));
+        p.forEach(m -> movieDTOList.add(new PersonDTO(m)));
         return movieDTOList;
     }
 
@@ -287,6 +287,8 @@ public class PersonDTO implements Serializable
         @Size(max = 45)
         @NotNull
         private  String description;
+        @NotNull
+        private Person idPERSON;
 
         public PhoneDTO(String phoneNumber, String description)
         {
@@ -294,10 +296,18 @@ public class PersonDTO implements Serializable
             this.description = description;
         }
 
+        //      public AddressDTO(Address a)
+        //        {
+        //            this.street = a.getStreet();
+        //            this.aditionalInfo = a.getAditionalInfo();
+        //            this.idCITY = new CityinfoDTO(a.getIdCITY());
+        //        }
+
         public PhoneDTO(Phone p )
         {
             this.phoneNumber = p.getPhoneNumber();
             this.description = p.getDescription();
+            this.idPERSON = p.getIdPERSON();
 
         }
 

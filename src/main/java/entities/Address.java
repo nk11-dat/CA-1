@@ -14,7 +14,7 @@ public class Address
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idADDRESS", nullable = false)
-    private Integer id;
+    private java.lang.Integer id;
 
     @Size(max = 45)
     @NotNull
@@ -67,12 +67,12 @@ public class Address
         this.hobbies = hobbies;
     }
 
-    public Integer getId()
+    public java.lang.Integer getId()
     {
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(java.lang.Integer id)
     {
         this.id = id;
     }

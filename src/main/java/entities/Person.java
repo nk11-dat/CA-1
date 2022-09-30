@@ -14,7 +14,7 @@ public class Person
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idPERSON", nullable = false)
-    private Integer id;
+    private java.lang.Integer id;
 
 
     @Size(max = 45)
@@ -29,7 +29,7 @@ public class Person
 
     @NotNull
     @Column(name = "age", nullable = false)
-    private Integer age;
+    private java.lang.Integer age;
 
     @Size(max = 45)
     @NotNull
@@ -59,7 +59,7 @@ public class Person
     {
     }
 
-    public Person(Address address, String firstName, String lastName, Integer age, String gender, String email)
+    public Person(Address address, String firstName, String lastName, java.lang.Integer age, String gender, String email)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -69,7 +69,7 @@ public class Person
         this.address = address;
     }
 
-    public Person(Address address, String firstName, String lastName, Integer age, String gender, String email, Set<Phone> phones, Set<Hobby> hobbies)
+    public Person(Address address, String firstName, String lastName, java.lang.Integer age, String gender, String email, Set<Phone> phones, Set<Hobby> hobbies)
     {
         this.address = address;
         this.firstName = firstName;
@@ -81,12 +81,12 @@ public class Person
         this.hobbies = hobbies;
     }
 
-    public Integer getId()
+    public java.lang.Integer getId()
     {
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(java.lang.Integer id)
     {
         this.id = id;
     }
@@ -121,12 +121,12 @@ public class Person
         this.lastName = lastName;
     }
 
-    public Integer getAge()
+    public java.lang.Integer getAge()
     {
         return age;
     }
 
-    public void setAge(Integer age)
+    public void setAge(java.lang.Integer age)
     {
         this.age = age;
     }
