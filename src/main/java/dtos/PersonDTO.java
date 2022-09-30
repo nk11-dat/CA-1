@@ -56,7 +56,9 @@ public class PersonDTO implements Serializable
         this.gender = p.getGender();
         this.email = p.getEmail();
         this.address = new AddressDTO(p.getAddress());
-        this.phones = p.getPhones();
+        p.getPhones().forEach((phoneEntity -> {
+            this.phones.add(new PhoneDTO(phoneEntity));
+        }));
     }
 
     public AddressDTO getAddress()
@@ -296,19 +298,11 @@ public class PersonDTO implements Serializable
             this.description = description;
         }
 
-        //      public AddressDTO(Address a)
-        //        {
-        //            this.street = a.getStreet();
-        //            this.aditionalInfo = a.getAditionalInfo();
-        //            this.idCITY = new CityinfoDTO(a.getIdCITY());
-        //        }
-
         public PhoneDTO(Phone p )
         {
             this.phoneNumber = p.getPhoneNumber();
             this.description = p.getDescription();
             this.idPERSON = p.getIdPERSON();
-
         }
 
         public String getPhoneNumber()
