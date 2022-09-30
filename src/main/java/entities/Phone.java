@@ -11,9 +11,9 @@ public class Phone
 {
     @Id
     @Size(max = 45)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "phoneNumber", nullable = false, length = 45)
-    private String id;
+    private String phoneNumber;
 
     @Size(max = 45)
     @NotNull
@@ -29,20 +29,27 @@ public class Phone
     {
     }
 
+    public Phone(String phoneNumber, String description, Person idPERSON)
+    {
+        this.phoneNumber = phoneNumber;
+        this.description = description;
+        this.idPERSON = idPERSON;
+    }
+
     public Phone(String description, Person idPERSON)
     {
         this.description = description;
         this.idPERSON = idPERSON;
     }
 
-    public String getId()
+    public String getPhoneNumber()
     {
-        return id;
+        return phoneNumber;
     }
 
-    public void setId(String id)
+    public void setPhoneNumber(String phoneNumber)
     {
-        this.id = id;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getDescription()
@@ -69,7 +76,7 @@ public class Phone
     public String toString()
     {
         return "Phone{" +
-                "id='" + id + '\'' +
+                "phoneNumber='" + phoneNumber + '\'' +
                 ", description='" + description + '\'' +
                 ", idPERSON=" + idPERSON +
                 '}';
@@ -81,12 +88,12 @@ public class Phone
         if (this == o) return true;
         if (!(o instanceof Phone)) return false;
         Phone phone = (Phone) o;
-        return getId().equals(phone.getId()) && getDescription().equals(phone.getDescription()) && getIdPERSON().equals(phone.getIdPERSON());
+        return getPhoneNumber().equals(phone.getPhoneNumber()) && getDescription().equals(phone.getDescription()) && getIdPERSON().equals(phone.getIdPERSON());
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(getId(), getDescription(), getIdPERSON());
+        return Objects.hash(getPhoneNumber(), getDescription(), getIdPERSON());
     }
 }

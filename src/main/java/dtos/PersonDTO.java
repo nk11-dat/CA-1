@@ -3,6 +3,7 @@ package dtos;
 import entities.Address;
 import entities.Cityinfo;
 import entities.Person;
+import entities.Phone;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -55,6 +56,7 @@ public class PersonDTO implements Serializable
         this.gender = p.getGender();
         this.email = p.getEmail();
         this.address = new AddressDTO(p.getAddress());
+        this.phones = new PhoneDTO(p.getPhones());
     }
 
     public AddressDTO getAddress()
@@ -281,20 +283,27 @@ public class PersonDTO implements Serializable
     public static class PhoneDTO implements Serializable
     {
         @Size(max = 45)
-        private final String id;
+        private  String phoneNumber;
         @Size(max = 45)
         @NotNull
-        private final String description;
+        private  String description;
 
-        public PhoneDTO(String id, String description)
+        public PhoneDTO(String phoneNumber, String description)
         {
-            this.id = id;
+            this.phoneNumber = phoneNumber;
             this.description = description;
         }
 
-        public String getId()
+        public PhoneDTO(Phone p )
         {
-            return id;
+            this.phoneNumber = p.getPhoneNumber();
+            this.description = p.getDescription();
+
+        }
+
+        public String getPhoneNumber()
+        {
+            return phoneNumber;
         }
 
         public String getDescription()
@@ -308,21 +317,21 @@ public class PersonDTO implements Serializable
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             PhoneDTO entity = (PhoneDTO) o;
-            return Objects.equals(this.id, entity.id) &&
+            return Objects.equals(this.phoneNumber, entity.phoneNumber) &&
                     Objects.equals(this.description, entity.description);
         }
 
         @Override
         public int hashCode()
         {
-            return Objects.hash(id, description);
+            return Objects.hash(phoneNumber, description);
         }
 
         @Override
         public String toString()
         {
             return getClass().getSimpleName() + "(" +
-                    "id = " + id + ", " +
+                    "phoneNumber = " + phoneNumber + ", " +
                     "description = " + description + ")";
         }
     }

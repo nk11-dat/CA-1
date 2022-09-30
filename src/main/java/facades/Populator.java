@@ -11,6 +11,7 @@ import dtos.PersonDTO;
 import entities.Address;
 import entities.Cityinfo;
 import entities.Person;
+import entities.Phone;
 import utils.EMF_Creator;
 
 /**
@@ -28,7 +29,9 @@ public class Populator {
         //Address address, String firstName, String lastName, Integer age, String gender, String email, Set<Phone> phones, Set<Hobby> hobbies
         Cityinfo ci = new Cityinfo("Testby", "6969");
         Address a = new Address("Testgade 14", "Th.", ci);
-        pf.create(new PersonDTO(new Person(a, "Ib", "Ibsen", 69, "Male", "ib@Ibsen.com")));
+        Person p = new Person(a, "Ib", "Ibsen", 69, "Male", "ib@Ibsen.com");
+        pf.create(new PersonDTO(p));
+        Phone po = new Phone("420420420","Mobil", p);
     }
     
     public static void main(String[] args) {
