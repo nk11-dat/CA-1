@@ -44,7 +44,7 @@ public class Person
     @OneToMany(mappedBy = "idPERSON", cascade = CascadeType.PERSIST)
     private Set<Phone> phones = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "PERSON_has_HOBBY",
             joinColumns = @JoinColumn(name = "PERSON_idPERSON"),
             inverseJoinColumns = @JoinColumn(name = "HOBBY_idHOBBY"))
@@ -225,6 +225,6 @@ public class Person
     public void addHobby(Hobby hobby)
     {
         this.hobbies.add(hobby);
-        hobby.getPeople().add(this);
+//        hobby.getPeople().add(this);
     }
 }

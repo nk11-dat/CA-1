@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.HobbyDTO;
 import dtos.PersonDTO;
 import dtos.RenameMeDTO;
 import entities.*;
@@ -52,24 +53,48 @@ public class PersonFacade
 
 
         Person person = new Person(new Address(rm.getAddress().getStreet(), rm.getAddress().getAditionalInfo(), new Cityinfo(rm.getAddress().getIdCITY().getCity(), rm.getAddress().getIdCITY().getZipcode())), rm.getFirstName(), rm.getLastName(), rm.getAge(),rm.getGender(),rm.getEmail());
-        for (PersonDTO.PhoneDTO phone : rm.getPhones()) {
-            person.addPhone(new Phone(phone.getPhoneNumber(), phone.getDescription()));
-        }
-        for (PersonDTO.HobbyDTO hobby : rm.getHobbies()) {
-            person.addHobby(new Hobby(hobby.getName(), hobby.getWikiLink(), hobby.getCategory(), hobby.getType()));
-        }
+//        for (PersonDTO.PhoneDTO phone : rm.getPhones()) {
+//            person.addPhone(new Phone(phone.getPhoneNumber(), phone.getDescription()));
+//        }
+//        for (PersonDTO.HobbyDTO hobby : rm.getHobbies()) {
+//            person.addHobby(new Hobby(hobby.getName(), hobby.getWikiLink(), hobby.getCategory(), hobby.getType()));
+//        }
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
+//            for (PersonDTO.HobbyDTO hobby : rm.getHobbies()) {
+//                Hobby h = em.find(Hobby.class, 12);
+//                person.addHobby(h);
+//                em.persist(person);
+////                em.persist(h);
+//            }
             em.persist(person);
-            for (PersonDTO.HobbyDTO hobby : rm.getHobbies()) {
-                em.persist(new Hobby(hobby.getName(), hobby.getWikiLink(), hobby.getCategory(), hobby.getType()));
-            }
             em.getTransaction().commit();
+
+//            em.getTransaction().begin();
+//            Hobby h = em.find(Hobby.class, 12);
+//            person = em.find(Person.class, 17);
+//            person.addHobby(h);
+//            em.getTransaction().commit();
+//            em.persist(person);
         } finally {
             em.close();
         }
         return new PersonDTO(person);
+    }
+
+    public Person addHobby(Integer personId, HobbyDTO hobbyDTO) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Person person = em.find(Person.class, 17);
+            Hobby hobby = em.find(Hobby.class, 12);//new Hobby(hobbyDTO.getName(),hobbyDTO.getWikiLink(), hobbyDTO.getCategory(), hobbyDTO.getType());
+            person.addHobby(hobby);
+            em.getTransaction().commit();
+            return person;
+        } finally {
+            em.close();
+        }
     }
 
     public RenameMeDTO getById(long id) { //throws RenameMeNotFoundException {

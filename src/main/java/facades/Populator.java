@@ -44,6 +44,7 @@ public class Populator {
 //        p.setPhones(ps);
 //        p.setHobbies(hs);
         pf.create(new PersonDTO(p));
+        pf.addHobby(p.getId(), hd);
     }
     public static void main(String[] args) {
         populate();

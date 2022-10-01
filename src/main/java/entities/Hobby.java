@@ -36,13 +36,13 @@ public class Hobby
     @Column(name = "type", nullable = false, length = 45)
     private String type;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "PERSON_has_HOBBY",
             joinColumns = @JoinColumn(name = "HOBBY_idHOBBY"),
             inverseJoinColumns = @JoinColumn(name = "PERSON_idPERSON"))
     private Set<Person> people = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "HOBBY_has_ADDRESS",
             joinColumns = @JoinColumn(name = "HOBBY_idHOBBY"),
             inverseJoinColumns = @JoinColumn(name = "ADDRESS_idADDRESS"))

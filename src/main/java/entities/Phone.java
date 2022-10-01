@@ -21,7 +21,7 @@ public class Phone
     private String description;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idPERSON", nullable = false)
     private Person idPERSON;
 
