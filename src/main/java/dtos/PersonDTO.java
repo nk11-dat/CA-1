@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class PersonDTO implements Serializable
 {
+    private Integer id;
     private  AddressDTO address;
     @Size(max = 45)
     @NotNull
@@ -44,6 +45,9 @@ public class PersonDTO implements Serializable
 
     public PersonDTO(Person p)
     {
+//        if (p.getId() != null) {
+            this.id = p.getId();
+//        }
         this.firstName = p.getFirstName();
         this.lastName = p.getLastName();
         this.age = p.getAge();
@@ -58,6 +62,16 @@ public class PersonDTO implements Serializable
         p.getHobbies().forEach(hobbyEntity -> {
             this.hobbies.add(new HobbyDTO(hobbyEntity));
         });
+    }
+
+    public Integer getId()
+    {
+        return id;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
     }
 
     public AddressDTO getAddress()

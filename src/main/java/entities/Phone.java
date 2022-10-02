@@ -23,7 +23,7 @@ public class Phone
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idPERSON", nullable = false)
-    private Person idPERSON;
+    private Person idPERSON = new Person();
 
     public Phone()
     {

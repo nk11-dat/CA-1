@@ -1,17 +1,14 @@
 package facades;
 
-import dtos.HobbyDTO;
 import dtos.PersonDTO;
-import dtos.RenameMeDTO;
 import entities.*;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
-import java.util.LinkedHashSet;
+import javax.ws.rs.WebApplicationException;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -45,50 +42,48 @@ public class PersonFacade
         return emf.createEntityManager();
     }
     
-    public PersonDTO create(PersonDTO rm){
+    public PersonDTO create(PersonDTO personDTO){
 
-//        Set<Phone> tempPhones = new LinkedHashSet<>();
-//
-//        Set<Hobby> tempHobbies = new LinkedHashSet<>();
+        Person person = new Person(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())), personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(),personDTO.getGender(),personDTO.getEmail());
 
-
-        Person person = new Person(new Address(rm.getAddress().getStreet(), rm.getAddress().getAditionalInfo(), new Cityinfo(rm.getAddress().getIdCITY().getCity(), rm.getAddress().getIdCITY().getZipcode())), rm.getFirstName(), rm.getLastName(), rm.getAge(),rm.getGender(),rm.getEmail());
-//        for (PersonDTO.PhoneDTO phone : rm.getPhones()) {
-//            person.addPhone(new Phone(phone.getPhoneNumber(), phone.getDescription()));
-//        }
-//        for (PersonDTO.HobbyDTO hobby : rm.getHobbies()) {
-//            person.addHobby(new Hobby(hobby.getName(), hobby.getWikiLink(), hobby.getCategory(), hobby.getType()));
-//        }
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-//            for (PersonDTO.HobbyDTO hobby : rm.getHobbies()) {
-//                Hobby h = em.find(Hobby.class, 12);
-//                person.addHobby(h);
-//                em.persist(person);
-////                em.persist(h);
-//            }
             em.persist(person);
             em.getTransaction().commit();
-
-//            em.getTransaction().begin();
-//            Hobby h = em.find(Hobby.class, 12);
-//            person = em.find(Person.class, 17);
-//            person.addHobby(h);
-//            em.getTransaction().commit();
-//            em.persist(person);
         } finally {
             em.close();
         }
         return new PersonDTO(person);
     }
 
-    public Person addHobby(Integer personId, HobbyDTO hobbyDTO) {
+    public PersonDTO create(Person person){
+
+//        Person person = new Person(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())), personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(),personDTO.getGender(),personDTO.getEmail());
+
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            Person person = em.find(Person.class, 17);
-            Hobby hobby = em.find(Hobby.class, 12);//new Hobby(hobbyDTO.getName(),hobbyDTO.getWikiLink(), hobbyDTO.getCategory(), hobbyDTO.getType());
+            em.persist(person);
+            em.flush(); //Behandel JPA som et offenligt toilet
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new PersonDTO(person);
+    }
+
+    public Person addHobby(Integer personId, Integer hobbyId) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Person person = em.find(Person.class, personId);
+            if (person == null)
+                throw new WebApplicationException("Person doesn't exist with id= " + personId);
+            Hobby hobby = em.find(Hobby.class, hobbyId);
+            if (hobby == null)
+                throw new WebApplicationException("Hobby doesn't exist with id= this is hardcoded....!¿?" + personId);
+            // new Hobby(hobbyDTO.getName(),hobbyDTO.getWikiLink(), hobbyDTO.getCategory(), hobbyDTO.getType());
             person.addHobby(hobby);
             em.getTransaction().commit();
             return person;
@@ -97,12 +92,31 @@ public class PersonFacade
         }
     }
 
-    public RenameMeDTO getById(long id) { //throws RenameMeNotFoundException {
+    public Person addAndCreatePhone(Integer personId, Phone phone) { //TODO:OBS, den skulle måske retunere en DTO...
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Person person = em.find(Person.class, personId);
+            if (person == null)
+                throw new WebApplicationException("Person doesn't exist with id= " + personId);
+            Phone p = em.find(Phone.class, phone.getPhoneNumber());//new Hobby(hobbyDTO.getName(),hobbyDTO.getWikiLink(), hobbyDTO.getCategory(), hobbyDTO.getType());
+            if (p != null)
+                throw new WebApplicationException("PhoneNumber already exist = " + p.getPhoneNumber());
+            person.addPhone(phone);
+            em.flush();
+            em.getTransaction().commit();
+            return person;
+        } finally {
+            em.close();
+        }
+    }
+
+    public PersonDTO getPersonById(Integer id) { //throws RenameMeNotFoundException {
         EntityManager em = emf.createEntityManager();
-        RenameMe rm = em.find(RenameMe.class, id);
-//        if (rm == null)
-//            throw new RenameMeNotFoundException("The RenameMe entity with ID: "+id+" Was not found");
-        return new RenameMeDTO(rm);
+        Person p = em.find(Person.class, id);
+        if (p == null)
+            throw new WebApplicationException("Person doesn't exist with id= " + id);
+        return new PersonDTO(p);
     }
     
     //TODO Remove/Change this before use

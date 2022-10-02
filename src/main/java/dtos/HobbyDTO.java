@@ -8,6 +8,7 @@ import entities.Person;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import java.util.Set;
  */
 public class HobbyDTO implements Serializable
 {
+    private Integer id;
     @Size(max = 45)
     @NotNull
     private final String name;
@@ -28,8 +30,8 @@ public class HobbyDTO implements Serializable
     @Size(max = 45)
     @NotNull
     private final String type;
-    private Set<PersonDTO> people;
-    private Set<AddressDTO> addresses;
+    private Set<PersonDTO> people = new LinkedHashSet<>();
+    private Set<AddressDTO> addresses = new LinkedHashSet<>();
 
     public HobbyDTO(String name, String wikiLink, String category, String type, Set<PersonDTO> people, Set<AddressDTO> addresses)
     {
@@ -43,6 +45,8 @@ public class HobbyDTO implements Serializable
 
     public HobbyDTO(Hobby h)
     {
+        if (h.getId() != 0)
+            this.id = h.getId();
         this.name = h.getName();
         this.wikiLink = h.getWikiLink();
         this.category = h.getCategory();
@@ -53,6 +57,16 @@ public class HobbyDTO implements Serializable
         h.getAddresses().forEach(adressEntity -> {
             this.addresses.add(new AddressDTO(adressEntity));
         });
+    }
+
+    public Integer getId()
+    {
+        return id;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
     }
 
     public String getName()

@@ -56,7 +56,7 @@ public class HobbyFacade
         return new RenameMeDTO(rme);
     }
 
-    public HobbyDTO getById(Integer id) { //throws RenameMeNotFoundException {
+    public HobbyDTO getHobbyDTOById(Integer id) { //throws RenameMeNotFoundException {
         EntityManager em = emf.createEntityManager();
         Hobby ho = em.find(Hobby.class, id);
 //        if (rm == null)
