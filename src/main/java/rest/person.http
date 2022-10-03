@@ -8,7 +8,7 @@ Content-Type: application/json
 {"str1": "First Property", "str2": "Second Property"}
 
 ###
-POST https://www.sem3nicki.dk/hobbies/person/
+POST https://www.sem3nicki.dk/hobbies/api/person/
 #POST http://localhost:8080/devops-starter/api/person
 Content-Type: application/json
 

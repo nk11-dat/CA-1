@@ -30,14 +30,27 @@ public class Address
     @JoinColumn(name = "idCITY", nullable = false)
     private Cityinfo idCITY;
 
-    @OneToMany(mappedBy = "address")
-    private Set<Person> persons = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "address")
+//    private Set<Person> persons = new LinkedHashSet<>();
 
     @ManyToMany
     @JoinTable(name = "HOBBY_has_ADDRESS",
             joinColumns = @JoinColumn(name = "ADDRESS_idADDRESS"),
             inverseJoinColumns = @JoinColumn(name = "HOBBY_idHOBBY"))
     private Set<Hobby> hobbies = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "idADDRESS")
+    private Set<Person> people = new LinkedHashSet<>();
+
+    public Set<Person> getPeople()
+    {
+        return people;
+    }
+
+    public void setPeople(Set<Person> people)
+    {
+        this.people = people;
+    }
 
     public Address()
     {
@@ -48,7 +61,7 @@ public class Address
         this.street = street;
         this.aditionalInfo = aditionalInfo;
         this.idCITY = idCITY;
-        this.persons = persons;
+        this.people = persons;
     }
 
     public Address(String street, String aditionalInfo, Cityinfo idCITY)
@@ -63,7 +76,7 @@ public class Address
         this.street = street;
         this.aditionalInfo = aditionalInfo;
         this.idCITY = idCITY;
-        this.persons = persons;
+        this.people = persons;
         this.hobbies = hobbies;
     }
 
@@ -109,12 +122,12 @@ public class Address
 
     public Set<Person> getPerson()
     {
-        return persons;
+        return people;
     }
 
     public void setPerson(Set<Person> person)
     {
-        this.persons = person;
+        this.people = person;
     }
 
     public Set<Hobby> getHobbies()
@@ -150,7 +163,7 @@ public class Address
                 ", street='" + street + '\'' +
                 ", aditionalInfo='" + aditionalInfo + '\'' +
                 ", idCITY=" + idCITY +
-                ", person=" + persons +
+                ", person=" + people +
                 ", hobbies=" + hobbies +
                 '}';
     }
