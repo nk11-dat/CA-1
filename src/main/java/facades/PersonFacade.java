@@ -118,6 +118,25 @@ public class PersonFacade
             throw new WebApplicationException("Person doesn't exist with id= " + id);
         return new PersonDTO(p);
     }
+
+    public PersonDTO getPersonByPhone(String phoneNumber) { //throws RenameMeNotFoundException {
+        EntityManager em = emf.createEntityManager();
+
+        try
+        {
+            TypedQuery <Person> query = em.createQuery("SELECT p FROM Person p JOIN p.phones ph WHERE ph.phoneNumber = :phoneNumber", Person.class);
+            query.setParameter("phoneNumber", phoneNumber);
+            Person person = query.getSingleResult();
+            if (person != null)
+            {
+                return new PersonDTO(person);
+            }
+            throw new WebApplicationException("Person with phone number = " + phoneNumber + " does not exist");
+        } finally
+        {
+            em.close();
+        }
+    }
     
     //TODO Remove/Change this before use
     public long getRenameMeCount(){
