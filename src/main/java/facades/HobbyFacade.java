@@ -43,17 +43,31 @@ public class HobbyFacade
         return emf.createEntityManager();
     }
     
-    public RenameMeDTO create(RenameMeDTO rm){
-        RenameMe rme = new RenameMe(rm.getDummyStr1(), rm.getDummyStr2());
+    public HobbyDTO create(Hobby hb){
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(rme);
+            em.persist(hb);
+            em.flush();
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new RenameMeDTO(rme);
+        return new HobbyDTO(hb);
+    }
+
+    public Hobby create(HobbyDTO hb){
+        EntityManager em = getEntityManager();
+        Hobby hob = new Hobby(hb.getName(),hb.getWikiLink(),hb.getCategory(),hb.getType());
+        try {
+            em.getTransaction().begin();
+            em.persist(hob);
+            em.flush();
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return hob;
     }
 
     public HobbyDTO getHobbyDTOById(Integer id) { //throws RenameMeNotFoundException {
