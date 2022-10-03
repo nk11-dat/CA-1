@@ -30,6 +30,7 @@ public class PersonDTO implements Serializable
     private  String email;
     private  Set<PhoneDTO> phones;
     private  Set<HobbyDTO> hobbies;
+    private Integer idAddress;
 
     public PersonDTO(AddressDTO address, String firstName, String lastName, java.lang.Integer age, String gender, String email, Set<PhoneDTO> phones, Set<HobbyDTO> hobbies)
     {
@@ -62,6 +63,7 @@ public class PersonDTO implements Serializable
         p.getHobbies().forEach(hobbyEntity -> {
             this.hobbies.add(new HobbyDTO(hobbyEntity));
         });
+        this.idAddress = p.getIdADDRESS().getId();
     }
 
     public Integer getId()
@@ -112,6 +114,16 @@ public class PersonDTO implements Serializable
     public Set<HobbyDTO> getHobbies()
     {
         return hobbies;
+    }
+
+    public Integer getIdAddress()
+    {
+        return idAddress;
+    }
+
+    public void setIdAddress(Integer idAddress)
+    {
+        this.idAddress = idAddress;
     }
 
     @Override
@@ -437,4 +449,5 @@ public class PersonDTO implements Serializable
                     "type = " + type + ")";
         }
     }
+
 }
