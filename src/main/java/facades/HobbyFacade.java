@@ -1,8 +1,10 @@
 package facades;
 
 import dtos.HobbyDTO;
+import dtos.PersonDTO;
 import dtos.RenameMeDTO;
 import entities.Hobby;
+import entities.Person;
 import entities.RenameMe;
 import utils.EMF_Creator;
 
@@ -24,10 +26,10 @@ public class HobbyFacade
 
     //Private Constructor to ensure Singleton
     private HobbyFacade() {}
-    
-    
+
+
     /**
-     * 
+     *
      * @param _emf
      * @return an instance of this facade class.
      */
@@ -42,7 +44,7 @@ public class HobbyFacade
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
+
     public HobbyDTO create(Hobby hb){
         EntityManager em = getEntityManager();
         try {
@@ -77,29 +79,52 @@ public class HobbyFacade
 //            throw new RenameMeNotFoundException("The RenameMe entity with ID: "+id+" Was not found");
         return new HobbyDTO(ho);
     }
-    
+
     //TODO Remove/Change this before use
     public long getRenameMeCount(){
         EntityManager em = getEntityManager();
         try{
             long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
             return renameMeCount;
-        }finally{  
+        }finally{
             em.close();
         }
     }
-    
-    public List<RenameMeDTO> getAll(){
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<RenameMe> query = em.createQuery("SELECT r FROM RenameMe r", RenameMe.class);
-        List<RenameMe> rms = query.getResultList();
-        return RenameMeDTO.getDtos(rms);
+
+    public List<Person> getAllPeopleWithHobby(HobbyDTO h)
+    {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p join p.hobbies h where h.id = :id", Person.class);
+            query.setParameter("id",h.getId());
+            List<Person> rms = query.getResultList();
+            return rms;
+        }finally {
+            em.close();
+        }
     }
-    
+
+
+
+    public List<HobbyDTO> getAllHobbiesDTO(){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Hobby> query = em.createQuery("SELECT r FROM Hobby r", Hobby.class);
+        List<Hobby> rms = query.getResultList();
+        return HobbyDTO.getDTOs(rms);
+    }
+    public List<Hobby> getAllHobbies(){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Hobby> query = em.createQuery("SELECT r FROM Hobby r", Hobby.class);
+        List<Hobby> rms = query.getResultList();
+        return rms;
+    }
+
+
+    // ???? *løft dit venstre øjenbryn*
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
         HobbyFacade fe = getInstance(emf);
-        fe.getAll().forEach(dto->System.out.println(dto));
+        fe.getAllHobbies().forEach(dto->System.out.println(dto));
     }
 
 }

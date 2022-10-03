@@ -8,9 +8,7 @@ import entities.Person;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A DTO for the {@link entities.Hobby} entity
@@ -32,6 +30,14 @@ public class HobbyDTO implements Serializable
     private final String type;
     private Set<PersonDTO> people = new LinkedHashSet<>();
     private Set<AddressDTO> addresses = new LinkedHashSet<>();
+
+    public HobbyDTO(String name, String wikiLink, String category, String type)
+    {
+        this.name = name;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
+    }
 
     public HobbyDTO(String name, String wikiLink, String category, String type, Set<PersonDTO> people, Set<AddressDTO> addresses)
     {
@@ -129,6 +135,13 @@ public class HobbyDTO implements Serializable
                 "type = " + type + ", " +
                 "people = " + people + ", " +
                 "addresses = " + addresses + ")";
+    }
+
+    public static List<HobbyDTO> getDTOs(List<Hobby> hobs)
+    {
+        List<HobbyDTO> hobslist = new ArrayList<>();
+        hobs.forEach(m -> hobslist.add(new HobbyDTO(m)));
+        return hobslist;
     }
 
     /**

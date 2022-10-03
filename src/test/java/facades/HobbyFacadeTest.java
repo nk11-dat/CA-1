@@ -19,6 +19,7 @@ class HobbyFacadeTest
 {
     private static EntityManagerFactory emf;
     private static HobbyFacade facade;
+    Hobby h1,h2,h3;
 
     public HobbyFacadeTest() {
     }
@@ -49,9 +50,9 @@ class HobbyFacadeTest
             Person p1 = new Person(a1,"Frida","Fridason",27,"Female","Frida@Fridason.dk");
             Person p2 = new Person(a1,"Gunter","Gunterson",33,"Male","Gunter@Gunterson.no");
 
-            Hobby h1 = new Hobby("3D-udskrivning", "https://en.wikipedia.org/wiki/3D_printing", "Generel", "Indendørs");
-            Hobby h2 =new Hobby("Akrobatik", "https://en.wikipedia.org/wiki/Acrobatics", "Generel", "Indendørs");
-            Hobby h3 = new Hobby("Skuespil", "https://en.wikipedia.org/wiki/Acting", "Generel", "Indendørs");
+            h1 = new Hobby("3D-udskrivning", "https://en.wikipedia.org/wiki/3D_printing", "Generel", "Indendørs");
+           h2 =new Hobby("Akrobatik", "https://en.wikipedia.org/wiki/Acrobatics", "Generel", "Indendørs");
+            h3 = new Hobby("Skuespil", "https://en.wikipedia.org/wiki/Acting", "Generel", "Indendørs");
             p1.addHobby(h1);
             p1.addHobby(h2);
             p2.addHobby(h1);
@@ -80,19 +81,21 @@ class HobbyFacadeTest
         try {
             em.getTransaction().begin();
             Hobby found = em.find(Hobby.class, 4);
-            HobbyDTO actual = new HobbyDTO(found);
-            assertEquals(h4, actual);
+            HobbyDTO actual1 = new HobbyDTO(found);
+            assertEquals(h4, actual1);
+
+            List<Hobby> actual2 = facade.getAllHobbies();
+            assertEquals(4, actual2.size());
+            assertThat(actual2, containsInAnyOrder(h1, h2, h3, found));
         }
         finally {
             em.close();
         }
-//        List<HobbyDTO> actual = facade.getAllEmployees();
-//        assertEquals(4, actual.size());
-//        assertThat(actual, containsInAnyOrder(e1, e2, e3, h4));
     }
 
     @Test
     void getHobbyDTOById()
     {
+        facade.getAllPeopleWithHobby(new HobbyDTO(h1));
     }
 }
