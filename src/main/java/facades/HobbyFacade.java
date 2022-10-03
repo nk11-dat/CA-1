@@ -91,14 +91,28 @@ public class HobbyFacade
         }
     }
 
-    public List<Person> getAllPeopleWithHobby(HobbyDTO h)
+    public List<PersonDTO> getAllPeopleWithHobby(HobbyDTO h)
     {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p join p.hobbies h where h.id = :id", Person.class);
             query.setParameter("id",h.getId());
             List<Person> rms = query.getResultList();
-            return rms;
+            List<PersonDTO> listOfPeople = PersonDTO.getDTOs(rms);
+            return listOfPeople;
+        }finally {
+            em.close();
+        }
+    }
+
+    public int getPeopleCountWithHobby(HobbyDTO h)
+    {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p join p.hobbies h where h.id = :id", Person.class);
+            query.setParameter("id",h.getId());
+            List<Person> rms = query.getResultList();
+            return rms.size();
         }finally {
             em.close();
         }

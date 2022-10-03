@@ -20,6 +20,7 @@ class HobbyFacadeTest
     private static EntityManagerFactory emf;
     private static HobbyFacade facade;
     Hobby h1,h2,h3;
+    Person p1,p2;
 
     public HobbyFacadeTest() {
     }
@@ -47,11 +48,11 @@ class HobbyFacadeTest
             Cityinfo ci = new Cityinfo("IbBy", "6969");
             Address a1 = new Address("Testgade 16", "Tv.", ci);
             Address a2 = new Address("Testgade 17", "basement", ci);
-            Person p1 = new Person(a1,"Frida","Fridason",27,"Female","Frida@Fridason.dk");
-            Person p2 = new Person(a1,"Gunter","Gunterson",33,"Male","Gunter@Gunterson.no");
+            p1 = new Person(a1,"Frida","Fridason",27,"Female","Frida@Fridason.dk");
+            p2 = new Person(a1,"Gunter","Gunterson",33,"Male","Gunter@Gunterson.no");
 
             h1 = new Hobby("3D-udskrivning", "https://en.wikipedia.org/wiki/3D_printing", "Generel", "Indendørs");
-           h2 =new Hobby("Akrobatik", "https://en.wikipedia.org/wiki/Acrobatics", "Generel", "Indendørs");
+            h2 =new Hobby("Akrobatik", "https://en.wikipedia.org/wiki/Acrobatics", "Generel", "Indendørs");
             h3 = new Hobby("Skuespil", "https://en.wikipedia.org/wiki/Acting", "Generel", "Indendørs");
             p1.addHobby(h1);
             p1.addHobby(h2);
@@ -94,8 +95,23 @@ class HobbyFacadeTest
     }
 
     @Test
+    void getAllPeopleWithHobby()
+    {
+        List<PersonDTO> actual = facade.getAllPeopleWithHobby(new HobbyDTO(h1));
+        assertEquals(2, actual.size());
+        assertThat(actual, containsInAnyOrder(new PersonDTO(p1), new PersonDTO(p2)));
+    }
+
+    @Test
+    void getPeopleCountWithHobby()
+    {
+        int actual = facade.getPeopleCountWithHobby(new HobbyDTO(h1));
+        assertEquals(2, actual);
+    }
+
+    @Test
     void getHobbyDTOById()
     {
-        facade.getAllPeopleWithHobby(new HobbyDTO(h1));
+
     }
 }
