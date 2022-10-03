@@ -303,7 +303,7 @@ public class PersonDTO implements Serializable
         @NotNull
         private  String description;
         @NotNull
-        private Person idPERSON;
+        private Integer idPERSON;
 
         public PhoneDTO(String phoneNumber, String description)
         {
@@ -315,7 +315,7 @@ public class PersonDTO implements Serializable
         {
             this.phoneNumber = p.getPhoneNumber();
             this.description = p.getDescription();
-            this.idPERSON = p.getIdPERSON();
+            this.idPERSON = p.getIdPERSON().getId();
         }
 
         public String getPhoneNumber()
