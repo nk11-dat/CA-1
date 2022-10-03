@@ -42,20 +42,20 @@ public class PersonFacade
         return emf.createEntityManager();
     }
     
-    public PersonDTO create(PersonDTO personDTO){
-
-        Person person = new Person(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())), personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(),personDTO.getGender(),personDTO.getEmail());
-
-        EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(person);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-        return new PersonDTO(person);
-    }
+//    public PersonDTO create(PersonDTO personDTO){
+//
+//        Person person = new Person(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())), personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(),personDTO.getGender(),personDTO.getEmail());
+//
+//        EntityManager em = getEntityManager();
+//        try {
+//            em.getTransaction().begin();
+//            em.persist(person);
+//            em.getTransaction().commit();
+//        } finally {
+//            em.close();
+//        }
+//        return new PersonDTO(person);
+//    }
 
     public PersonDTO create(Person person){
 
@@ -121,7 +121,6 @@ public class PersonFacade
 
     public PersonDTO getPersonByPhone(String phoneNumber) { //throws RenameMeNotFoundException {
         EntityManager em = emf.createEntityManager();
-
         try
         {
             TypedQuery <Person> query = em.createQuery("SELECT p FROM Person p JOIN p.phones ph WHERE ph.phoneNumber = :phoneNumber", Person.class);
@@ -162,4 +161,19 @@ public class PersonFacade
         fe.getAll().forEach(dto->System.out.println(dto));
     }
 
+    public List<PersonDTO> getAllPersonByZipcode(String zipcode)
+    {
+        EntityManager em = getEntityManager();
+        try
+        {
+            TypedQuery<Person> query = em.createQuery("select p from Person p join p.address ad join ad. cit where cit.zipcode = :zipcode", Person.class);
+            query.setParameter("zipcode", zipcode);
+            List<Person> personList = query.getResultList();
+            return PersonDTO.getDTOs(personList);
+        }
+        finally
+        {
+            em.close();
+        }
+    }
 }

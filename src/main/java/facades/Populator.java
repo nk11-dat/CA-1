@@ -24,14 +24,14 @@ public class Populator {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         PersonFacade pf = PersonFacade.getInstance(emf);
         HobbyFacade hf = HobbyFacade.getInstance(emf);
-        Cityinfo ci = new Cityinfo("Testby", "6969"); //TODO: find en by der findes istedet for og brug den... din abe...
-        Address a = new Address("Testgade 16", "Tv.", ci);
+        Cityinfo ci = new Cityinfo("Testbybla", "3700"); //TODO: find en by der findes istedet for og brug den... din abe...
+        Address a = new Address("Testgade 17", "Th.", ci);
         HobbyDTO hd = hf.getHobbyDTOById(122);
         Set<Phone> ps = new HashSet<>();
-        Person p = new Person(a,"Beeny", "Karlos", 32, "Female", "beeny@nicemail.com");
+        Person p = new Person(a,"Ib", "Ibsen", 47, "Female", "iby@nicemail.com");
         PersonDTO pd = pf.create(p);
         pf.addHobby(pd.getId(), hd.getId());
-        pf.addAndCreatePhone(2, new Phone("66699666","Mobil"));
+        pf.addAndCreatePhone(9, new Phone("123456","Mobil"));
 //        FacadeExample fe = FacadeExample.getFacadeExample(emf);
 //        fe.create(new RenameMeDTO(new RenameMe("First 1", "Last 1")));
 //        fe.create(new RenameMeDTO(new RenameMe("First 2", "Last 2")));

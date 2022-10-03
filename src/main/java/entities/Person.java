@@ -50,10 +50,26 @@ public class Person
             inverseJoinColumns = @JoinColumn(name = "HOBBY_idHOBBY"))
     private Set<Hobby> hobbies = new LinkedHashSet<>();
 
-    @MapsId
+//    @MapsId
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "idPERSON", nullable = false)
+//    private Address address;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idPERSON", nullable = false)
-    private Address address;
+    @JoinColumn(name = "idADDRESS", nullable = false)
+    private Address idADDRESS;
+
+
+    public Address getIdADDRESS()
+    {
+        return idADDRESS;
+    }
+
+    public void setIdADDRESS(Address idADDRESS)
+    {
+        this.idADDRESS = idADDRESS;
+    }
 
     public Person()
     {
@@ -66,12 +82,12 @@ public class Person
         this.age = age;
         this.gender = gender;
         this.email = email;
-        this.address = address;
+        this.idADDRESS = address;
     }
 
     public Person(Address address, String firstName, String lastName, java.lang.Integer age, String gender, String email, Set<Phone> phones, Set<Hobby> hobbies)
     {
-        this.address = address;
+        this.idADDRESS = address;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -92,7 +108,7 @@ public class Person
         this.gender = gender;
         this.email = email;
         this.hobbies = hobbies;
-        this.address = address;
+        this.idADDRESS = address;
     }
 
     public java.lang.Integer getId()
@@ -107,12 +123,12 @@ public class Person
 
     public Address getAddress()
     {
-        return address;
+        return idADDRESS;
     }
 
     public void setAddress(Address address)
     {
-        this.address = address;
+        this.idADDRESS = address;
     }
 
     public String getFirstName()
