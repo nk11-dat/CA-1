@@ -50,15 +50,15 @@ public class PersonResource
         return GSON.toJson(personDTO);
     }
 
-//    @Path("{zipcode}")
-//    @GET
-//    @Produces({MediaType.APPLICATION_JSON})
-//    public String getAllPersonByZipcode(@PathParam("zipcode") String zipcode)
-//    {
-//        List<PersonDTO> personDTOList = FACADE.getAllPersonByZipcode(zipcode);
-//        PersonDTO personDTO = FACADE.getPersonByPhone(zipcode);
-//        return GSON.toJson(personDTO);
-//    }
+    @Path("zipcode/{zipcode}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getAllPersonByZipcode(@PathParam("zipcode") String zipcode)
+    {
+        List<PersonDTO> personDTOList = FACADE.getAllPersonByZipcode(zipcode);
+        return GSON.toJson(personDTOList);
+
+    }
 
 
     @Path("count")

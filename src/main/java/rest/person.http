@@ -20,10 +20,10 @@ Content-Type: application/json
 GET http://localhost:8080/hobbies/api/person/all
 Content-Type: application/json
 
-###
+### GetByPhone
 GET http://localhost:8080/hobbies/api/person/123456
 Content-Type: application/json
 
-###
-GET http://localhost:8080/hobbies/api/person/6969
+### GetByZipCode
+GET http://localhost:8080/hobbies/api/person/zipcode/3700
 Content-Type: application/json

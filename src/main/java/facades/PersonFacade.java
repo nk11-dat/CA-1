@@ -161,19 +161,19 @@ public class PersonFacade
         fe.getAll().forEach(dto->System.out.println(dto));
     }
 
-//    public List<PersonDTO> getAllPersonByZipcode(String zipcode)
-//    {
-//        EntityManager em = getEntityManager();
-//        try
-//        {
-//            TypedQuery<Person> query = em.createQuery("select p from Person p join p.address ad join ad. cit where cit.zipcode = :zipcode", Person.class);
-//            query.setParameter("zipcode", zipcode);
-//            List<Person> personList = query.getResultList();
-//            return PersonDTO.getDTOs(personList);
-//        }
-//        finally
-//        {
-//            em.close();
-//        }
-//    }
+    public List<PersonDTO> getAllPersonByZipcode(String zipcode)
+    {
+        EntityManager em = getEntityManager();
+        try
+        {
+            TypedQuery<Person> query = em.createQuery("select p from Person p join p.idADDRESS ad join ad.idCITY cit where cit.zipcode = :zipcode", Person.class);
+            query.setParameter("zipcode", zipcode);
+            List<Person> personList = query.getResultList();
+            return PersonDTO.getDTOs(personList);
+        }
+        finally
+        {
+            em.close();
+        }
+    }
 }
