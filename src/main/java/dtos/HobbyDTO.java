@@ -49,9 +49,18 @@ public class HobbyDTO implements Serializable
         this.addresses = addresses;
     }
 
+    public HobbyDTO(Integer id, String name, String wikiLink, String category, String type)
+    {
+        this.id = id;
+        this.name = name;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
+    }
+
     public HobbyDTO(Hobby h)
     {
-        if (h.getId() != 0)
+        if (h.getId() != null)
             this.id = h.getId();
         this.name = h.getName();
         this.wikiLink = h.getWikiLink();

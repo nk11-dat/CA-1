@@ -11,6 +11,7 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.WebApplicationException;
 import java.util.List;
 
 /**
@@ -75,8 +76,8 @@ public class HobbyFacade
     public HobbyDTO getHobbyDTOById(Integer id) { //throws RenameMeNotFoundException {
         EntityManager em = emf.createEntityManager();
         Hobby ho = em.find(Hobby.class, id);
-//        if (rm == null)
-//            throw new RenameMeNotFoundException("The RenameMe entity with ID: "+id+" Was not found");
+        if (ho == null)
+            throw new WebApplicationException("The 'Hobby' entity with ID: "+id+" Was not found");
         return new HobbyDTO(ho);
     }
 
@@ -133,6 +134,54 @@ public class HobbyFacade
         return rms;
     }
 
+    public Hobby deleteHobbyById(int i)
+    {
+        EntityManager em = emf.createEntityManager();
+        try{
+
+        Hobby hob = em.find(Hobby.class,i);
+        em.getTransaction().begin();
+        em.remove(hob);
+        em.flush();
+        em.getTransaction().commit();
+        return hob;
+
+        } finally {
+            em.close();
+        }
+
+    }
+
+    public HobbyDTO editHobbyDTO(HobbyDTO hob)
+    {
+        EntityManager em = emf.createEntityManager();
+        try
+        {
+            em.getTransaction().begin();
+
+            Hobby h = em.find(Hobby.class,hob.getId());
+
+            if (h == null)
+            {
+                throw new WebApplicationException ("The 'Hobby' entity with ID: "+hob.getId()+" Was not found");
+            }
+          //  h.setAddresses(); ikke angivet i DTO
+            h.setName(hob.getName());
+            h.setWikiLink(hob.getWikiLink());
+            h.setCategory(hob.getCategory());
+            h.setType(hob.getType());
+
+            em.flush();
+            em.getTransaction().commit();
+            return new HobbyDTO(h);
+
+        } finally {
+            em.close();
+        }
+
+    }
+
+
 
     // ???? *løft dit venstre øjenbryn*
     public static void main(String[] args) {
@@ -140,5 +189,7 @@ public class HobbyFacade
         HobbyFacade fe = getInstance(emf);
         fe.getAllHobbies().forEach(dto->System.out.println(dto));
     }
+
+
 
 }

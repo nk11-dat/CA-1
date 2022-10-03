@@ -8,6 +8,7 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.WebApplicationException;
 
 import java.util.List;
 
@@ -19,27 +20,31 @@ class HobbyFacadeTest
 {
     private static EntityManagerFactory emf;
     private static HobbyFacade facade;
-    Hobby h1,h2,h3;
-    Person p1,p2;
+    Hobby h1, h2, h3;
+    Person p1, p2;
 
-    public HobbyFacadeTest() {
+    public HobbyFacadeTest()
+    {
     }
 
     @BeforeAll
-    public static void setUpClass() {
+    public static void setUpClass()
+    {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = HobbyFacade.getInstance(emf);
     }
 
     @AfterAll
-    public static void tearDownClass() {
+    public static void tearDownClass()
+    {
 //        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
     }
 
     // Setup the DataBase in a known state BEFORE EACH TEST
     //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
-    public void setUp() {
+    public void setUp()
+    {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -48,11 +53,11 @@ class HobbyFacadeTest
             Cityinfo ci = new Cityinfo("IbBy", "6969");
             Address a1 = new Address("Testgade 16", "Tv.", ci);
             Address a2 = new Address("Testgade 17", "basement", ci);
-            p1 = new Person(a1,"Frida","Fridason",27,"Female","Frida@Fridason.dk");
-            p2 = new Person(a1,"Gunter","Gunterson",33,"Male","Gunter@Gunterson.no");
+            p1 = new Person(a1, "Frida", "Fridason", 27, "Female", "Frida@Fridason.dk");
+            p2 = new Person(a1, "Gunter", "Gunterson", 33, "Male", "Gunter@Gunterson.no");
 
             h1 = new Hobby("3D-udskrivning", "https://en.wikipedia.org/wiki/3D_printing", "Generel", "Indendørs");
-            h2 =new Hobby("Akrobatik", "https://en.wikipedia.org/wiki/Acrobatics", "Generel", "Indendørs");
+            h2 = new Hobby("Akrobatik", "https://en.wikipedia.org/wiki/Acrobatics", "Generel", "Indendørs");
             h3 = new Hobby("Skuespil", "https://en.wikipedia.org/wiki/Acting", "Generel", "Indendørs");
             p1.addHobby(h1);
             p1.addHobby(h2);
@@ -73,7 +78,6 @@ class HobbyFacadeTest
     }
 
 
-
     @Test
     void create()
     {
@@ -88,8 +92,7 @@ class HobbyFacadeTest
             List<Hobby> actual2 = facade.getAllHobbies();
             assertEquals(4, actual2.size());
             assertThat(actual2, containsInAnyOrder(h1, h2, h3, found));
-        }
-        finally {
+        } finally {
             em.close();
         }
     }
@@ -112,6 +115,36 @@ class HobbyFacadeTest
     @Test
     void getHobbyDTOById()
     {
+    }
+
+    @Test
+    void deleteHobby()
+    {
+        Hobby hob = facade.deleteHobbyById(2);
+        List<HobbyDTO> hoblist = facade.getAllHobbiesDTO();
+        assertEquals(2, hoblist.size());
+//        HobbyDTO gone = facade.getHobbyDTOById(2);
+//        assertNull(gone);
+        assertThrows(WebApplicationException.class, () -> facade.getHobbyDTOById(2));
+
+        WebApplicationException thrown = Assertions.assertThrows(WebApplicationException.class, () -> {
+            facade.getHobbyDTOById(2);
+        }, "The 'Hobby' entity with ID: 2 Was not found");
+
+        Assertions.assertEquals("The 'Hobby' entity with ID: 2 Was not found", thrown.getMessage());
+    }
+
+    @Test
+    void editHobby()
+    {
+        HobbyDTO before = facade.getHobbyDTOById(3);
+        HobbyDTO expected = new HobbyDTO(3,"Tanks","https://en.wikipedia.org/wiki/yourmumisatank","praised","openFields");
+        HobbyDTO after = facade.editHobbyDTO(expected);
+
+        assertNotEquals(before,after);
+        assertEquals(expected,after);
+
+        assertEquals(after,facade.getHobbyDTOById(3));
 
     }
 }
