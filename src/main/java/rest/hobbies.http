@@ -1,0 +1,28 @@
+GET http://localhost:8080/devops-starter/api/person
+
+###Get Dankess
+GET http://localhost:8080/hobbies/api/hobbies
+Content-Type: application/json
+
+{"str1": "First Property", "str2": "Second Property"}
+
+###Get All hobbies
+GET http://localhost:8080/hobbies/api/hobbies/all
+Content-Type: application/json
+
+###Get hobbies %like%
+GET http://localhost:8080/hobbies/api/hobbies/bord
+Content-Type: application/json
+
+###Get people with hobby
+GET http://localhost:8080/hobbies/api/hobbies/people/Tegning
+Content-Type: application/json
+
+###
+POST https://www.sem3nicki.dk/hobbies/api/person/
+#POST http://localhost:8080/devops-starter/api/person
+Content-Type: application/json
+
+{
+
+}

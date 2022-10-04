@@ -29,7 +29,7 @@ public class PersonResource
     @Produces({MediaType.APPLICATION_JSON})
     public String demo()
     {
-        return "{\"msg\":\"Hello World\"}";
+        return "{\"msg\":\"Hello Darkness my old friend...\"}";
     }
 
     @Path("all")

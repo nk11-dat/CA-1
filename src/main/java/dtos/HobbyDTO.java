@@ -8,9 +8,7 @@ import entities.Person;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A DTO for the {@link entities.Hobby} entity
@@ -33,6 +31,14 @@ public class HobbyDTO implements Serializable
     private Set<PersonDTO> people = new LinkedHashSet<>();
     private Set<AddressDTO> addresses = new LinkedHashSet<>();
 
+    public HobbyDTO(String name, String wikiLink, String category, String type)
+    {
+        this.name = name;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
+    }
+
     public HobbyDTO(String name, String wikiLink, String category, String type, Set<PersonDTO> people, Set<AddressDTO> addresses)
     {
         this.name = name;
@@ -43,9 +49,18 @@ public class HobbyDTO implements Serializable
         this.addresses = addresses;
     }
 
+    public HobbyDTO(Integer id, String name, String wikiLink, String category, String type)
+    {
+        this.id = id;
+        this.name = name;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
+    }
+
     public HobbyDTO(Hobby h)
     {
-        if (h.getId() != 0)
+        if (h.getId() != null)
             this.id = h.getId();
         this.name = h.getName();
         this.wikiLink = h.getWikiLink();
@@ -129,6 +144,13 @@ public class HobbyDTO implements Serializable
                 "type = " + type + ", " +
                 "people = " + people + ", " +
                 "addresses = " + addresses + ")";
+    }
+
+    public static List<HobbyDTO> getDTOs(List<Hobby> hobs)
+    {
+        List<HobbyDTO> hobslist = new ArrayList<>();
+        hobs.forEach(m -> hobslist.add(new HobbyDTO(m)));
+        return hobslist;
     }
 
     /**
