@@ -31,7 +31,7 @@ public class Populator {
         Person p = new Person(a,"Ib", "Ibsen", 47, "Female", "iby@nicemail.com");
         PersonDTO pd = pf.create(p);
         pf.addHobby(pd.getId(), hd.getId());
-        pf.addAndCreatePhone(9, new Phone("123456","Mobil"));
+        pf.addAndCreatePhone(10, new Phone("123456","Mobil"));
 //        FacadeExample fe = FacadeExample.getFacadeExample(emf);
 //        fe.create(new RenameMeDTO(new RenameMe("First 1", "Last 1")));
 //        fe.create(new RenameMeDTO(new RenameMe("First 2", "Last 2")));

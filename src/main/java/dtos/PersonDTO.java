@@ -29,10 +29,10 @@ public class PersonDTO implements Serializable
     @NotNull
     private  String email;
     private  Set<PhoneDTO> phones;
-    private  Set<HobbyDTO> hobbies;
+    private  Set<HobbyInnerDTO> hobbies;
     private Integer idAddress;
 
-    public PersonDTO(AddressDTO address, String firstName, String lastName, java.lang.Integer age, String gender, String email, Set<PhoneDTO> phones, Set<HobbyDTO> hobbies)
+    public PersonDTO(AddressDTO address, String firstName, String lastName, java.lang.Integer age, String gender, String email, Set<PhoneDTO> phones, Set<HobbyInnerDTO> hobbies)
     {
         this.address = address;
         this.firstName = firstName;
@@ -61,7 +61,7 @@ public class PersonDTO implements Serializable
         });
         this.hobbies = new LinkedHashSet<>();
         p.getHobbies().forEach(hobbyEntity -> {
-            this.hobbies.add(new HobbyDTO(hobbyEntity));
+            this.hobbies.add(new HobbyInnerDTO(hobbyEntity));
         });
         this.idAddress = p.getIdADDRESS().getId();
     }
@@ -111,7 +111,7 @@ public class PersonDTO implements Serializable
         return phones;
     }
 
-    public Set<HobbyDTO> getHobbies()
+    public Set<HobbyInnerDTO> getHobbies()
     {
         return hobbies;
     }
@@ -193,6 +193,21 @@ public class PersonDTO implements Serializable
             this.street = a.getStreet();
             this.aditionalInfo = a.getAditionalInfo();
             this.idCITY = new CityinfoDTO(a.getIdCITY());
+        }
+
+        public void setStreet(String street)
+        {
+            this.street = street;
+        }
+
+        public void setAditionalInfo(String aditionalInfo)
+        {
+            this.aditionalInfo = aditionalInfo;
+        }
+
+        public void setIdCITY(CityinfoDTO idCITY)
+        {
+            this.idCITY = idCITY;
         }
 
         public String getStreet()
@@ -323,6 +338,13 @@ public class PersonDTO implements Serializable
             this.description = description;
         }
 
+        public PhoneDTO(String phoneNumber, String description, Integer idPERSON)
+        {
+            this.phoneNumber = phoneNumber;
+            this.description = description;
+            this.idPERSON = idPERSON;
+        }
+
         public PhoneDTO(Phone p )
         {
             this.phoneNumber = p.getPhoneNumber();
@@ -368,7 +390,7 @@ public class PersonDTO implements Serializable
     /**
      * A DTO for the {@link entities.Hobby} entity
      */
-    public static class HobbyDTO implements Serializable
+    public static class HobbyInnerDTO implements Serializable
     {
         @Size(max = 45)
         @NotNull
@@ -383,7 +405,8 @@ public class PersonDTO implements Serializable
         @NotNull
         private final String type;
 
-        public HobbyDTO(Hobby h)
+
+        public HobbyInnerDTO(Hobby h)
         {
             this.name = h.getName();
             this.wikiLink = h.getWikiLink();
@@ -391,7 +414,7 @@ public class PersonDTO implements Serializable
             this.type = h.getType();
         }
 
-        public HobbyDTO(String name, String wikiLink, String category, String type)
+        public HobbyInnerDTO(String name, String wikiLink, String category, String type)
         {
             this.name = name;
             this.wikiLink = wikiLink;
@@ -426,7 +449,7 @@ public class PersonDTO implements Serializable
         {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            HobbyDTO entity = (HobbyDTO) o;
+            HobbyInnerDTO entity = (HobbyInnerDTO) o;
             return Objects.equals(this.name, entity.name) &&
                     Objects.equals(this.wikiLink, entity.wikiLink) &&
                     Objects.equals(this.category, entity.category) &&
