@@ -16,14 +16,55 @@ Content-Type: application/json
 
 }
 
-###
+### Get all persons
 GET http://localhost:8080/hobbies/api/person/all
 Content-Type: application/json
 
-### GetByPhone
-GET http://localhost:8080/hobbies/api/person/123456
+### Get person by phone number
+GET http://localhost:8080/hobbies/api/person/phone/123456
 Content-Type: application/json
 
-### GetByZipCode
+### Get persons by zipcode
 GET http://localhost:8080/hobbies/api/person/zipcode/3700
 Content-Type: application/json
+
+### Update person
+PUT http://localhost:8080/hobbies/api/person/update/9
+Content-Type: application/json
+
+{
+  "address": {
+    "street": "Nygade 17",
+    "aditionalInfo": "Th.",
+    "idCITY": {
+      "city": "Blablaby",
+      "zipcode": "3700"
+    }
+  },
+  "firstName": "Bimbam",
+  "lastName": "Karlos",
+  "age": 36,
+  "gender": "Male",
+  "email": "bimbam@nicemail.com",
+  "phones": [
+    {
+      "phoneNumber": "654321",
+      "description": "Mobil",
+      "idPERSON": 8
+    }
+  ],
+  "hobbies": [
+    {
+      "name": "Kraftløftning",
+      "wikiLink": "https://en.wikipedia.org/wiki/Powerlifting",
+      "category": "Generel",
+      "type": "Indendørs"
+    }
+  ],
+  "idAddress": 8
+
+}
+
+### Delete person
+DELETE http://localhost:8080/hobbies/api/person/delete/8
+Accept: application/json

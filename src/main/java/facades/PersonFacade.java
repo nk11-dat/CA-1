@@ -8,7 +8,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.WebApplicationException;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -126,11 +129,11 @@ public class PersonFacade
             TypedQuery <Person> query = em.createQuery("SELECT p FROM Person p JOIN p.phones ph WHERE ph.phoneNumber = :phoneNumber", Person.class);
             query.setParameter("phoneNumber", phoneNumber);
             Person person = query.getSingleResult();
-            if (person != null)
+            if (person == null)
             {
-                return new PersonDTO(person);
+                throw new WebApplicationException("Person with phone number = " + phoneNumber + " does not exist");
             }
-            throw new WebApplicationException("Person with phone number = " + phoneNumber + " does not exist");
+            return new PersonDTO(person);
         } finally
         {
             em.close();
@@ -176,4 +179,55 @@ public class PersonFacade
             em.close();
         }
     }
+
+    public PersonDTO editPerson(PersonDTO p) {
+        EntityManager em = getEntityManager();
+        try{
+            Person person = em.find(Person.class, p.getId());
+            if (person == null)
+                throw new WebApplicationException("Person with id: " + p.getId() + " dosesn't exist.");
+            em.getTransaction().begin();
+            Cityinfo cityinfo = new Cityinfo(p.getAddress().getIdCITY().getCity(), p.getAddress().getIdCITY().getZipcode());
+            Address address = new Address(p.getAddress().getStreet(), p.getAddress().getAditionalInfo(), cityinfo);
+            person.setAddress(address);
+            person.setFirstName(p.getFirstName());
+            person.setLastName(p.getLastName());
+            person.setAge(p.getAge());
+            person.setGender(p.getGender());
+            person.setEmail(p.getEmail());
+            Set<Phone> phoneSet = new HashSet<>();
+            p.getPhones().forEach(phoneDTO -> {
+                phoneSet.add(new Phone(phoneDTO.getPhoneNumber(), phoneDTO.getDescription()));
+            });
+            person.setPhones(phoneSet);
+            Set<Hobby> hobbies = new HashSet<>();
+            p.getHobbies().forEach(hobbyDTO -> {
+                hobbies.add(new Hobby(hobbyDTO.getName(), hobbyDTO.getWikiLink(), hobbyDTO.getCategory(), hobbyDTO.getType()));
+            });
+            person.setHobbies(hobbies);
+            em.flush();
+            em.getTransaction().commit();
+            return new PersonDTO(person);
+        }
+        finally {
+            em.close();
+        }
+    }
+
+    public PersonDTO deletePerson(int id) {
+        EntityManager em = getEntityManager();
+        try{
+            Person person = em.find(Person.class, id);
+            if (person == null)
+                throw new WebApplicationException("Person with id: " + id + " dosesn't exist.");
+            em.getTransaction().begin();
+            em.remove(person);
+            em.getTransaction().commit();
+            return new PersonDTO(person);
+        }
+        finally {
+            em.close();
+        }
+    }
+
 }

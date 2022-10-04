@@ -41,7 +41,7 @@ public class PersonResource
         return GSON.toJson(personDTOList);
     }
 
-    @Path("{phoneNumber}")
+    @Path("phone/{phoneNumber}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String getPersonByPhoneNumber(@PathParam("phoneNumber") String phoneNumber)
@@ -57,8 +57,26 @@ public class PersonResource
     {
         List<PersonDTO> personDTOList = FACADE.getAllPersonByZipcode(zipcode);
         return GSON.toJson(personDTOList);
-
     }
+
+//    @PUT
+//    @Path("update/{id}")
+//    @Consumes({MediaType.APPLICATION_JSON})
+//    @Produces({MediaType.APPLICATION_JSON})
+//    public String update(@PathParam("id") int id, String input){
+//        PersonDTO personDTO = GSON.fromJson(input, PersonDTO.class);
+//        personDTO.setId(id);
+//        personDTO = FACADE.editPerson(personDTO);
+//        return GSON.toJson(personDTO);
+//    }
+
+//    @DELETE
+//    @Produces({MediaType.APPLICATION_JSON})
+//    @Path("delete/{id}")
+//    public String delete(@PathParam("id") int id){
+//        PersonDTO deleted = FACADE.deletePerson(id);
+//        return GSON.toJson(deleted);
+//    }
 
 
     @Path("count")

@@ -163,7 +163,7 @@ public class PersonDTO implements Serializable
     }
     public static List<PersonDTO> getDTOs(List<Person> p)
     {
-        List<PersonDTO> movieDTOList = new ArrayList<>();
+        List<PersonDTO> movieDTOList = new ArrayList<>(); //TODO skal nok omdøbes :)
         p.forEach(m -> movieDTOList.add(new PersonDTO(m)));
         return movieDTOList;
     }
