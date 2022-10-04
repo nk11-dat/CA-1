@@ -92,14 +92,28 @@ public class HobbyFacade
         }
     }
 
+    public List<PersonDTO> getAllPeopleWithHobby(String hobbyName)
+    {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<PersonDTO> query = em.createQuery("SELECT p FROM Person p join p.hobbies h where h.name = :hobbyName", PersonDTO.class);
+            query.setParameter("hobbyName", hobbyName);
+            List<PersonDTO> persons = query.getResultList();
+//            List<PersonDTO> listOfPeople = PersonDTO.getDTOs(persons);
+            return persons;
+        }finally {
+            em.close();
+        }
+    }
+
     public List<PersonDTO> getAllPeopleWithHobby(HobbyDTO h)
     {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p join p.hobbies h where h.id = :id", Person.class);
             query.setParameter("id",h.getId());
-            List<Person> rms = query.getResultList();
-            List<PersonDTO> listOfPeople = PersonDTO.getDTOs(rms);
+            List<Person> persons = query.getResultList();
+            List<PersonDTO> listOfPeople = PersonDTO.getDTOs(persons);
             return listOfPeople;
         }finally {
             em.close();
@@ -124,8 +138,8 @@ public class HobbyFacade
     public List<HobbyDTO> getAllHobbiesDTO(){
         EntityManager em = emf.createEntityManager();
         TypedQuery<Hobby> query = em.createQuery("SELECT r FROM Hobby r", Hobby.class);
-        List<Hobby> rms = query.getResultList();
-        return HobbyDTO.getDTOs(rms);
+        List<Hobby> hobbyList = query.getResultList();
+        return HobbyDTO.getDTOs(hobbyList);
     }
     public List<Hobby> getAllHobbies(){
         EntityManager em = emf.createEntityManager();
@@ -191,5 +205,15 @@ public class HobbyFacade
     }
 
 
-
+    public List<HobbyDTO> getHobbyDTOByName(String hobbyName)
+    {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<HobbyDTO> query = em.createQuery("select h from Hobby h where h.name like :hobbyName", HobbyDTO.class);
+//        query.setParameter("hobbyName", hobbyName);
+        query.setParameter("hobbyName", "%" + hobbyName + "%");
+        List<HobbyDTO> listFoundHobbies = query.getResultList();
+        if (listFoundHobbies == null)
+            throw new WebApplicationException("Couldn't find any hobby matching the name: " + hobbyName);
+        return listFoundHobbies;
+    }
 }
