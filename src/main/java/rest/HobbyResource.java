@@ -59,17 +59,48 @@ public class HobbyResource
         return GSON.toJson(people);
     }
 
+    @Path("people/count/{hobbyname}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getPeopleCountWithHobby(@PathParam("hobbyname") String hobbyname)
+    {
+        List<PersonDTO> people = FACADE.getAllPeopleWithHobby(hobbyname);
+//        long count = FACADE.getRenameMeCount();
+        //System.out.println("--------------->"+count);
+        return GSON.toJson(people.size());
+    }
 
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public String createPerson(String input)
+    public String createHobby(String input)
     {
-//        innerPersonDTO rmdto = GSON.fromJson(input, innerPersonDTO.class);
-//        rmdto = FACADE.create(rmdto);
-//        System.out.println(rmdto);
-//        return GSON.toJson(rmdto);
-////        return Response.ok().entity(rmdto).build();
-        return "";
+        HobbyDTO hob = GSON.fromJson(input,HobbyDTO.class);
+        FACADE.create(hob);
+
+        return GSON.toJson(hob);
+    }
+
+    @PUT
+    @Path("edit/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String editHobby(@PathParam("id") int id, String input)
+    {
+        HobbyDTO hob = GSON.fromJson(input,HobbyDTO.class);
+        hob.setId(id);
+        FACADE.editHobbyDTO(hob);
+
+        return GSON.toJson(hob);
+    }
+
+    @DELETE
+    @Path("delete/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String deleteHobby(@PathParam("id") int id)
+    {
+        HobbyDTO hob = new HobbyDTO(FACADE.deleteHobbyById(id));
+
+        return GSON.toJson(hob);
     }
 }

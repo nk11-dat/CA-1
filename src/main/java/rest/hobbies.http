@@ -18,11 +18,34 @@ Content-Type: application/json
 GET http://localhost:8080/hobbies/api/hobbies/people/Tegning
 Content-Type: application/json
 
-###
-POST https://www.sem3nicki.dk/hobbies/api/person/
+###Get people count with hobby
+GET http://localhost:8080/hobbies/api/hobbies/people/count/Tegning
+Content-Type: application/json
+
+### create a new hobby
+POST http://localhost:8080/hobbies/api/hobbies
 #POST http://localhost:8080/devops-starter/api/person
 Content-Type: application/json
 
 {
-
+      "name": "Tanks",
+      "wikiLink": "https://en.wikipedia.org/wiki/Tanking",
+      "category": "tacos",
+      "type": "open fields"
 }
+### edit a hobby
+PUT http://localhost:8080/hobbies/api/hobbies/edit/453
+#POST http://localhost:8080/devops-starter/api/person
+Content-Type: application/json
+
+{
+"name": "Kampvogn",
+"wikiLink": "https://en.wikipedia.org/wiki/Tanking",
+"category": "Maskineri",
+"type": "Store dejlige åbne marker"
+}
+
+### delete a hobby
+DELETE http://localhost:8080/hobbies/api/hobbies/delete/453
+#POST http://localhost:8080/devops-starter/api/person
+Content-Type: application/json
