@@ -46,7 +46,7 @@ public class Populator {
 //        ps.add(po);
 //        p.setPhones(ps);
 //        p.setHobbies(hs);
-//        pf.create(new PersonDTO(p));
+//        pf.create(new innerPersonDTO(p));
     }
     public static void main(String[] args) {
         populate();

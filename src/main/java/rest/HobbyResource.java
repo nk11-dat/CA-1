@@ -53,7 +53,7 @@ public class HobbyResource
     @Produces({MediaType.APPLICATION_JSON})
     public String getPeopleWithHobby(@PathParam("hobbyname") String hobbyname)
     {
-        List<PersonDTO> people = FACADE.getAllPeopleWithHobby(hobbyname);
+        List<HobbyDTO> people = FACADE.getAllPeopleWithHobby(hobbyname);
 //        long count = FACADE.getRenameMeCount();
         //System.out.println("--------------->"+count);
         return GSON.toJson(people);
@@ -65,7 +65,7 @@ public class HobbyResource
     @Consumes({MediaType.APPLICATION_JSON})
     public String createPerson(String input)
     {
-//        PersonDTO rmdto = GSON.fromJson(input, PersonDTO.class);
+//        innerPersonDTO rmdto = GSON.fromJson(input, innerPersonDTO.class);
 //        rmdto = FACADE.create(rmdto);
 //        System.out.println(rmdto);
 //        return GSON.toJson(rmdto);

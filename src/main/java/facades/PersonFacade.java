@@ -45,7 +45,7 @@ public class PersonFacade
         return emf.createEntityManager();
     }
     
-//    public PersonDTO create(PersonDTO personDTO){
+//    public innerPersonDTO create(innerPersonDTO personDTO){
 //
 //        Person person = new Person(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())), personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(),personDTO.getGender(),personDTO.getEmail());
 //
@@ -57,7 +57,7 @@ public class PersonFacade
 //        } finally {
 //            em.close();
 //        }
-//        return new PersonDTO(person);
+//        return new innerPersonDTO(person);
 //    }
 
     public PersonDTO create(Person person){

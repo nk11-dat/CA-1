@@ -28,7 +28,7 @@ public class HobbyDTO implements Serializable
     @Size(max = 45)
     @NotNull
     private final String type;
-    private Set<PersonDTO> people = new LinkedHashSet<>();
+    private Set<innerPersonDTO> people = new LinkedHashSet<>();
     private Set<AddressDTO> addresses = new LinkedHashSet<>();
 
     public HobbyDTO(String name, String wikiLink, String category, String type)
@@ -39,7 +39,7 @@ public class HobbyDTO implements Serializable
         this.type = type;
     }
 
-    public HobbyDTO(String name, String wikiLink, String category, String type, Set<PersonDTO> people, Set<AddressDTO> addresses)
+    public HobbyDTO(String name, String wikiLink, String category, String type, Set<innerPersonDTO> people, Set<AddressDTO> addresses)
     {
         this.name = name;
         this.wikiLink = wikiLink;
@@ -67,7 +67,7 @@ public class HobbyDTO implements Serializable
         this.category = h.getCategory();
         this.type = h.getType();
         h.getPeople().forEach( personEntity -> {
-            this.people.add(new PersonDTO(personEntity));
+            this.people.add(new innerPersonDTO(personEntity));
     });
         h.getAddresses().forEach(adressEntity -> {
             this.addresses.add(new AddressDTO(adressEntity));
@@ -104,7 +104,7 @@ public class HobbyDTO implements Serializable
         return type;
     }
 
-    public Set<PersonDTO> getPeople()
+    public Set<innerPersonDTO> getPeople()
     {
         return people;
     }
@@ -156,7 +156,7 @@ public class HobbyDTO implements Serializable
     /**
      * A DTO for the {@link Person} entity
      */
-    public static class PersonDTO implements Serializable
+    public static class innerPersonDTO implements Serializable
     {
         @Size(max = 45)
         @NotNull
@@ -173,7 +173,7 @@ public class HobbyDTO implements Serializable
         @NotNull
         private final String email;
 
-        public PersonDTO(String firstName, String lastName, Integer age, String gender, String email)
+        public innerPersonDTO(String firstName, String lastName, Integer age, String gender, String email)
         {
             this.firstName = firstName;
             this.lastName = lastName;
@@ -182,7 +182,7 @@ public class HobbyDTO implements Serializable
             this.email = email;
         }
 
-        public PersonDTO(Person p)
+        public innerPersonDTO(Person p)
         {
             this.firstName = p.getFirstName();
             this.lastName = p.getLastName();
@@ -221,7 +221,7 @@ public class HobbyDTO implements Serializable
         {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            PersonDTO entity = (PersonDTO) o;
+            innerPersonDTO entity = (innerPersonDTO) o;
             return Objects.equals(this.firstName, entity.firstName) &&
                     Objects.equals(this.lastName, entity.lastName) &&
                     Objects.equals(this.age, entity.age) &&

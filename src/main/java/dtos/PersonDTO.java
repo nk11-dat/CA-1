@@ -29,7 +29,7 @@ public class PersonDTO implements Serializable
     @NotNull
     private  String email;
     private  Set<PhoneDTO> phones;
-    private  Set<HobbyDTO> hobbies;
+    private  Set<PersonDTO.HobbyDTO> hobbies;
     private Integer idAddress;
 
     public PersonDTO(AddressDTO address, String firstName, String lastName, java.lang.Integer age, String gender, String email, Set<PhoneDTO> phones, Set<HobbyDTO> hobbies)

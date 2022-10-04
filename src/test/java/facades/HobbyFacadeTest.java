@@ -85,7 +85,7 @@ class HobbyFacadeTest
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            Hobby found = em.find(Hobby.class, 4);
+            Hobby found = em.find(Hobby.class, h4.getId());
             HobbyDTO actual1 = new HobbyDTO(found);
             assertEquals(h4, actual1);
 
@@ -120,31 +120,31 @@ class HobbyFacadeTest
     @Test
     void deleteHobby()
     {
-        Hobby hob = facade.deleteHobbyById(2);
+        Hobby hob = facade.deleteHobbyById(h2.getId());
         List<HobbyDTO> hoblist = facade.getAllHobbiesDTO();
         assertEquals(2, hoblist.size());
 //        HobbyDTO gone = facade.getHobbyDTOById(2);
 //        assertNull(gone);
-        assertThrows(WebApplicationException.class, () -> facade.getHobbyDTOById(2));
+        assertThrows(WebApplicationException.class, () -> facade.getHobbyDTOById(hob.getId()));
 
         WebApplicationException thrown = Assertions.assertThrows(WebApplicationException.class, () -> {
-            facade.getHobbyDTOById(2);
-        }, "The 'Hobby' entity with ID: 2 Was not found");
+            facade.getHobbyDTOById(hob.getId());
+        }, "The 'Hobby' entity with ID: "+hob.getId()+" Was not found");
 
-        Assertions.assertEquals("The 'Hobby' entity with ID: 2 Was not found", thrown.getMessage());
+        Assertions.assertEquals("The 'Hobby' entity with ID: " + hob.getId() + " Was not found", thrown.getMessage());
     }
 
     @Test
     void editHobby()
     {
         HobbyDTO before = facade.getHobbyDTOById(3);
-        HobbyDTO expected = new HobbyDTO(3,"Tanks","https://en.wikipedia.org/wiki/yourmumisatank","praised","openFields");
+        HobbyDTO expected = new HobbyDTO(3, "Tanks", "https://en.wikipedia.org/wiki/yourmumisatank", "praised", "openFields");
         HobbyDTO after = facade.editHobbyDTO(expected);
 
-        assertNotEquals(before,after);
-        assertEquals(expected,after);
+        assertNotEquals(before, after);
+        assertEquals(expected, after);
 
-        assertEquals(after,facade.getHobbyDTOById(3));
+        assertEquals(after, facade.getHobbyDTOById(3));
 
     }
 }

@@ -64,7 +64,7 @@ public class PersonResource
 //    @Consumes({MediaType.APPLICATION_JSON})
 //    @Produces({MediaType.APPLICATION_JSON})
 //    public String update(@PathParam("id") int id, String input){
-//        PersonDTO personDTO = GSON.fromJson(input, PersonDTO.class);
+//        innerPersonDTO personDTO = GSON.fromJson(input, innerPersonDTO.class);
 //        personDTO.setId(id);
 //        personDTO = FACADE.editPerson(personDTO);
 //        return GSON.toJson(personDTO);
@@ -74,7 +74,7 @@ public class PersonResource
 //    @Produces({MediaType.APPLICATION_JSON})
 //    @Path("delete/{id}")
 //    public String delete(@PathParam("id") int id){
-//        PersonDTO deleted = FACADE.deletePerson(id);
+//        innerPersonDTO deleted = FACADE.deletePerson(id);
 //        return GSON.toJson(deleted);
 //    }
 
@@ -96,7 +96,7 @@ public class PersonResource
 //    @Consumes({MediaType.APPLICATION_JSON})
 //    public String createPerson(String input)
 //    {
-//        PersonDTO rmdto = GSON.fromJson(input, PersonDTO.class);
+//        innerPersonDTO rmdto = GSON.fromJson(input, innerPersonDTO.class);
 //        rmdto = FACADE.create(rmdto);
 //        System.out.println(rmdto);
 //        return GSON.toJson(rmdto);
