@@ -92,14 +92,14 @@ public class HobbyFacade
         }
     }
 
-    public List<HobbyDTO> getAllPeopleWithHobby(String hobbyName)
+    public List<PersonDTO> getAllPeopleWithHobby(String hobbyName)
     {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h join h.people p where h.name = :hobbyName", Hobby.class);
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p join p.hobbies h where h.name = :hobbyName", Person.class);
             query.setParameter("hobbyName", hobbyName);
-            List<Hobby> persons = query.getResultList();
-            List<HobbyDTO> aaa = HobbyDTO.getDTOs(persons);
+            List<Person> persons = query.getResultList();
+            List<PersonDTO> aaa = PersonDTO.getDTOs(persons);
 //            List<innerPersonDTO> listOfPeople = innerPersonDTO.getDTOs(persons);
             return aaa;
         }finally {

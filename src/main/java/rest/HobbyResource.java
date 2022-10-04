@@ -53,7 +53,7 @@ public class HobbyResource
     @Produces({MediaType.APPLICATION_JSON})
     public String getPeopleWithHobby(@PathParam("hobbyname") String hobbyname)
     {
-        List<HobbyDTO> people = FACADE.getAllPeopleWithHobby(hobbyname);
+        List<PersonDTO> people = FACADE.getAllPeopleWithHobby(hobbyname);
 //        long count = FACADE.getRenameMeCount();
         //System.out.println("--------------->"+count);
         return GSON.toJson(people);
