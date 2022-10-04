@@ -96,11 +96,12 @@ public class HobbyFacade
     {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<PersonDTO> query = em.createQuery("SELECT p FROM Person p join p.hobbies h where h.name = :hobbyName", PersonDTO.class);
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p join p.hobbies h where h.name = :hobbyName", Person.class);
             query.setParameter("hobbyName", hobbyName);
-            List<PersonDTO> persons = query.getResultList();
-//            List<PersonDTO> listOfPeople = PersonDTO.getDTOs(persons);
-            return persons;
+            List<Person> persons = query.getResultList();
+            List<PersonDTO> aaa = PersonDTO.getDTOs(persons);
+//            List<innerPersonDTO> listOfPeople = innerPersonDTO.getDTOs(persons);
+            return aaa;
         }finally {
             em.close();
         }
