@@ -78,8 +78,8 @@ public class PersonFacade
 
     public PersonDTO createPerson(PersonDTO personDTO)
     {
-
-        Person person = new Person(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())), personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(),personDTO.getGender(),personDTO.getEmail());
+        Address address = createAdress(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())));
+        Person person = new Person(address, personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(),personDTO.getGender(),personDTO.getEmail());
 
         EntityManager em = getEntityManager();
         try {
@@ -91,6 +91,20 @@ public class PersonFacade
             em.close();
         }
         return new PersonDTO(person);
+    }
+
+    private Address createAdress(Address address)
+    {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(address);
+            em.flush(); //Behandel JPA som et offenligt toilet
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return address;
     }
 
     public Person addHobby(Integer personId, Integer hobbyId)
