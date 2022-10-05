@@ -21,7 +21,7 @@ GET http://localhost:8080/hobbies/api/person/all
 Content-Type: application/json
 
 ### Get person by phone number
-GET http://localhost:8080/hobbies/api/person/phone/123456
+GET http://localhost:8080/hobbies/api/person/phone/66699666
 Content-Type: application/json
 
 ### Get persons by zipcode
@@ -29,16 +29,16 @@ GET http://localhost:8080/hobbies/api/person/zipcode/3700
 Content-Type: application/json
 
 ### Update person
-PUT http://localhost:8080/hobbies/api/person/update/9
+PUT http://localhost:8080/hobbies/api/person/update/3
 Content-Type: application/json
 
 {
   "address": {
-    "street": "Nygade 17",
+    "street": "Testgade 14",
     "aditionalInfo": "Th.",
     "idCITY": {
-      "city": "Blablaby",
-      "zipcode": "3700"
+      "city": "København K",
+      "zipcode": "1353"
     }
   },
   "firstName": "Bimbam",
@@ -48,9 +48,9 @@ Content-Type: application/json
   "email": "bimbam@nicemail.com",
   "phones": [
     {
-      "phoneNumber": "654321",
+      "phoneNumber": "25255878",
       "description": "Mobil",
-      "idPERSON": 8
+      "idPERSON": 3
     }
   ],
   "hobbies": [
@@ -61,7 +61,7 @@ Content-Type: application/json
       "type": "Indendørs"
     }
   ],
-  "idAddress": 8
+  "idAddress": 1
 
 }
 

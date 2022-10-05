@@ -197,7 +197,7 @@ public class PersonFacade
             person.setEmail(p.getEmail());
             Set<Phone> phoneSet = new HashSet<>();
             p.getPhones().forEach(phoneDTO -> {
-                phoneSet.add(new Phone(phoneDTO.getPhoneNumber(), phoneDTO.getDescription()));
+                phoneSet.add(new Phone(phoneDTO.getPhoneNumber(), phoneDTO.getDescription(), person.getId()));
             });
             person.setPhones(phoneSet);
             Set<Hobby> hobbies = new HashSet<>();

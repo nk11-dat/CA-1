@@ -25,6 +25,8 @@ public class Phone
     @JoinColumn(name = "idPERSON", nullable = false)
     private Person idPERSON = new Person();
 
+    private Integer idPERSONInt;
+
     public Phone()
     {
     }
@@ -40,6 +42,13 @@ public class Phone
     {
         this.phoneNumber = phoneNumber;
         this.description = description;
+    }
+
+    public Phone(String phoneNumber, String description, Integer idPERSONInt)
+    {
+        this.phoneNumber = phoneNumber;
+        this.description = description;
+        this.idPERSONInt = idPERSONInt;
     }
 
     public Phone(String description, Person idPERSON)
