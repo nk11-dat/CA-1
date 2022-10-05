@@ -8,9 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.WebApplicationException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Rename Class to a relevant name Add add relevant facade methods
@@ -249,16 +247,56 @@ public class PersonFacade
         EntityManager em = getEntityManager();
         Person person;
         person = em.find(Person.class, p.getId());
-        if (person == null)
-            throw new WebApplicationException("Person with id: " + p.getId() + " dosesn't exist.");
-        Set<Phone> phoneSet = new HashSet<>();
-            person.getPhones().forEach(phone -> {
-                phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person.getId()));
+
+        Set<Phone> phoneSet = new LinkedHashSet<>();
+            p.getPhones().forEach(phone -> {
+                phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person));
             });
-            person.setPhones(phoneSet);
+////        for (PersonDTO.PhoneDTO phone : p.getPhones()) {
+////            phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person));
+////        }
+        System.out.println();
+
+//        em.getTransaction().begin();
+
+//            List<innerPersonDTO> listOfPeople = innerPersonDTO.getDTOs(persons);
+//        if (person == null)
+//            throw new WebApplicationException("Person with id: " + p.getId() + " dosesn't exist.");
+//        Set<Phone> phoneSet = new HashSet<>();
+//            person.getPhones().forEach(phone -> {
+//                phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person.getId()));
+//            });
+//            person.getPhones().stream().toList();
+//            person.setPhones(phoneSet);
         try {
             em.getTransaction().begin();
-            em.merge(person);
+//            TypedQuery<Phone> query = em.createQuery("select pho from Phone pho where pho.idPERSON = :id", Phone.class);
+//            query.setParameter("id", person);
+//            List<Phone> phones = query.getResultList();
+//            List<PersonDTO.PhoneDTO> dtos = new ArrayList<>();
+//            p.getPhones().forEach(phoneDTO -> {
+//                dtos.add(phoneDTO);
+//            });
+//
+//            for (int i = 0; i < dtos.size(); i++) {
+//                if (i > phones.size())
+//                    phones.add(new Phone(dtos.get(i).getPhoneNumber(), dtos.get(i).getDescription(), person));
+//                else {
+//                    phones.get(i).setPhoneNumber(dtos.get(i).getPhoneNumber());
+//                    phones.get(i).setDescription(dtos.get(i).getDescription());
+//                }
+//            }
+//            List<PersonDTO.PhoneDTO> phoneDTOs = PersonDTO.PhoneDTO.getDTOs(person.getPhones());
+//            em.flush();
+            person.getPhones().forEach(phone -> {
+                em.remove(phone);
+            });
+            em.flush();
+            em.getTransaction().commit();
+
+            em.getTransaction().begin();
+            person.setPhones(phoneSet);
+            em.persist(person);
             em.flush();
             em.getTransaction().commit();
         } finally {
