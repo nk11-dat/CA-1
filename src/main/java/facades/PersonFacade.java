@@ -1,17 +1,15 @@
 package facades;
 
 import dtos.PersonDTO;
-import dtos.PhoneDTO;
 import entities.*;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.WebApplicationException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Rename Class to a relevant name Add add relevant facade methods
@@ -62,7 +60,7 @@ public class PersonFacade
 //        return new PersonDTO(person);
 //    }
 
-    public PersonDTO create(Person person)
+    public PersonDTO createPerson(Person person)
     {
 
 //        Person person = new Person(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())), personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(),personDTO.getGender(),personDTO.getEmail());
@@ -77,6 +75,48 @@ public class PersonFacade
             em.close();
         }
         return new PersonDTO(person);
+    }
+
+    public PersonDTO createPerson(PersonDTO personDTO)
+    {
+        Address address = createAdress(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())));
+        Person person = new Person(address, personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(), personDTO.getGender(), personDTO.getEmail());
+
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(person);
+            em.flush(); //Behandel JPA som et offenligt toilet
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new PersonDTO(person);
+    }
+
+    private Address createAdress(Address address)
+    {
+        EntityManager em = getEntityManager();
+        Address result;
+        try {
+            TypedQuery<Address> query = em.createQuery("select ad from Address ad join Cityinfo c where c.id = :id and c.zipcode = :zipcode and c.city = :city and ad.aditionalInfo = :aditionalInfo and ad.street = :street", Address.class);
+            query.setParameter("id", address.getIdCITY().getId());
+            query.setParameter("zipcode", address.getIdCITY().getZipcode());
+            query.setParameter("city", address.getIdCITY().getCity());
+            query.setParameter("aditionalInfo", address.getAditionalInfo());
+            query.setParameter("street", address.getStreet());
+            result = query.getSingleResult();
+            return result;
+
+        } catch (NoResultException e) {
+            em.getTransaction().begin();
+            em.persist(address);
+            em.flush(); //Behandel JPA som et offenligt toilet
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return address;
     }
 
     public Person addHobby(Integer personId, Integer hobbyId)
@@ -245,27 +285,61 @@ public class PersonFacade
         return new PersonDTO(person);
     }
 
-    public PersonDTO updatePhone(PhoneDTO p)
+    public PersonDTO updatePhone(PersonDTO p)
     {
         EntityManager em = getEntityManager();
-        Phone phone = em.find(Phone.class, p.getPhoneNumber());
+        Person person;
+        person = em.find(Person.class, p.getId());
 
-        if (phone == null)
-            throw new WebApplicationException("Phone with phonenumber: " + p.getPhoneNumber() + " dosesn't exist.");
+        Set<Phone> phoneSet = new LinkedHashSet<>();
+        p.getPhones().forEach(phone -> {
+            phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person));
+        });
+////        for (PersonDTO.PhoneDTO phone : p.getPhones()) {
+////            phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person));
+////        }
+        System.out.println();
 
-        Set<Phone> phoneSet = new HashSet<>();
+//        em.getTransaction().begin();
 
-        
-
-
-        Set<PhoneDTO> phoneSet = new HashSet<>();
-            person.getPhones().forEach(phone -> {
-                phoneSet.add(new PhoneDTO(phone.getPhoneNumber(), phone.getDescription(), ));
-            });
-            person.setPhones(phoneSet);
+//            List<innerPersonDTO> listOfPeople = innerPersonDTO.getDTOs(persons);
+//        if (person == null)
+//            throw new WebApplicationException("Person with id: " + p.getId() + " dosesn't exist.");
+//        Set<Phone> phoneSet = new HashSet<>();
+//            person.getPhones().forEach(phone -> {
+//                phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person.getId()));
+//            });
+//            person.getPhones().stream().toList();
+//            person.setPhones(phoneSet);
         try {
             em.getTransaction().begin();
-            em.merge(person);
+//            TypedQuery<Phone> query = em.createQuery("select pho from Phone pho where pho.idPERSON = :id", Phone.class);
+//            query.setParameter("id", person);
+//            List<Phone> phones = query.getResultList();
+//            List<PersonDTO.PhoneDTO> dtos = new ArrayList<>();
+//            p.getPhones().forEach(phoneDTO -> {
+//                dtos.add(phoneDTO);
+//            });
+//
+//            for (int i = 0; i < dtos.size(); i++) {
+//                if (i > phones.size())
+//                    phones.add(new Phone(dtos.get(i).getPhoneNumber(), dtos.get(i).getDescription(), person));
+//                else {
+//                    phones.get(i).setPhoneNumber(dtos.get(i).getPhoneNumber());
+//                    phones.get(i).setDescription(dtos.get(i).getDescription());
+//                }
+//            }
+//            List<PersonDTO.PhoneDTO> phoneDTOs = PersonDTO.PhoneDTO.getDTOs(person.getPhones());
+//            em.flush();
+            person.getPhones().forEach(phone -> {
+                em.remove(phone);
+            });
+            em.flush();
+            em.getTransaction().commit();
+
+            em.getTransaction().begin();
+            person.setPhones(phoneSet);
+            em.persist(person);
             em.flush();
             em.getTransaction().commit();
         } finally {

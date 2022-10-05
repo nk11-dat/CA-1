@@ -2,17 +2,13 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.HobbyDTO;
 import dtos.PersonDTO;
-import dtos.RenameMeDTO;
-import facades.FacadeExample;
 import facades.PersonFacade;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 //Todo Remove or change relevant parts before ACTUAL use
@@ -57,6 +53,15 @@ public class PersonResource
     {
         List<PersonDTO> personDTOList = FACADE.getAllPersonByZipcode(zipcode);
         return GSON.toJson(personDTOList);
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public String addPerson(String input){
+        PersonDTO personDTO = GSON.fromJson(input, PersonDTO.class);
+        PersonDTO newPersonDTO = FACADE.createPerson(personDTO);
+        return GSON.toJson(newPersonDTO);
     }
 
     @PUT

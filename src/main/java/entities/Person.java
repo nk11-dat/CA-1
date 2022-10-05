@@ -111,6 +111,15 @@ public class Person
         this.idADDRESS = address;
     }
 
+    public Person(String firstName, String lastName, Integer age, String gender, String email)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.email = email;
+    }
+
     public java.lang.Integer getId()
     {
         return id;

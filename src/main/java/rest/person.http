@@ -28,8 +28,29 @@ Content-Type: application/json
 GET http://localhost:8080/hobbies/api/person/zipcode/3700
 Content-Type: application/json
 
+### Create new person
+POST http://localhost:8080/hobbies/api/person
+Content-Type: application/json
+
+{
+  "address": {
+    "street": "Nickigade 10",
+    "aditionalInfo": "Tv.",
+    "idCITY": {
+      "city": "Nylars",
+      "zipcode": "3711"
+    }
+  },
+  "firstName": "Tim",
+  "lastName": "Timsen",
+  "age": 27,
+  "gender": "FeMale",
+  "email": "tim@tim.com"
+}
+
+
 ### Update person
-PUT http://localhost:8080/hobbies/api/person/update/1
+PUT http://localhost:8080/hobbies/api/person/update/8
 Content-Type: application/json
 
 {
@@ -48,9 +69,9 @@ Content-Type: application/json
   "email": "bimbam@nicemail.com",
   "phones": [
     {
-      "phoneNumber": "10101212",
+      "phoneNumber": "654321",
       "description": "Mobil",
-      "idPERSON": 1
+      "idPERSON": 8
     }
   ],
   "hobbies": [
@@ -61,7 +82,7 @@ Content-Type: application/json
       "type": "Indendørs"
     }
   ],
-  "idAddress": 1
+  "idAddress": 8
 
 }
 

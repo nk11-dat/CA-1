@@ -209,12 +209,12 @@ public class HobbyFacade
     public List<HobbyDTO> getHobbyDTOByName(String hobbyName)
     {
         EntityManager em = emf.createEntityManager();
-        TypedQuery<HobbyDTO> query = em.createQuery("select h from Hobby h where h.name like :hobbyName", HobbyDTO.class);
+        TypedQuery<Hobby> query = em.createQuery("select h from Hobby h where h.name like :hobbyName", Hobby.class);
 //        query.setParameter("hobbyName", hobbyName);
         query.setParameter("hobbyName", "%" + hobbyName + "%");
-        List<HobbyDTO> listFoundHobbies = query.getResultList();
+        List<Hobby> listFoundHobbies = query.getResultList();
         if (listFoundHobbies == null)
             throw new WebApplicationException("Couldn't find any hobby matching the name: " + hobbyName);
-        return listFoundHobbies;
+        return HobbyDTO.getDTOs(listFoundHobbies);
     }
 }
