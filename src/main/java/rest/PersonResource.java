@@ -77,6 +77,15 @@ public class PersonResource
         return GSON.toJson(edited);
     }
 
+//  @PUT
+//        @Path("addPhone/{id}")
+//        @Consumes({MediaType.APPLICATION_JSON})
+//        @Produces({MediaType.APPLICATION_JSON})
+//        public String addPhone(@PathParam("id") int id, String input)
+//        {
+//
+//        }
+
     @DELETE
     @Produces({MediaType.APPLICATION_JSON})
     @Path("delete/{id}")
