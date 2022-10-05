@@ -28,6 +28,28 @@ Content-Type: application/json
 GET http://localhost:8080/hobbies/api/person/zipcode/3700
 Content-Type: application/json
 
+### Create new person
+POST http://localhost:8080/hobbies/api/person
+Content-Type: application/json
+
+{
+  "address": {
+    "street": "Nickigade 10",
+    "aditionalInfo": "Tv.",
+    "idCITY": {
+      "city": "Nylars",
+      "zipcode": "3711"
+    }
+  },
+  "firstName": "Tim",
+  "lastName": "Timsen",
+  "age": 27,
+  "gender": "FeMale",
+  "email": "tim@tim.com",
+    "idAddress": 8
+}
+
+
 ### Update person
 PUT http://localhost:8080/hobbies/api/person/update/8
 Content-Type: application/json

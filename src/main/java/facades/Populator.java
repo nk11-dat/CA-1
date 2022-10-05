@@ -29,9 +29,9 @@ public class Populator {
         HobbyDTO hd = hf.getHobbyDTOById(23);
         Set<Phone> ps = new HashSet<>();
         Person p = new Person(a,"Jane", "Janson", 47, "Female", "iby@nicemail.com");
-        PersonDTO pd = pf.create(p);
+        PersonDTO pd = pf.createPerson(p);
         pf.addHobby(pd.getId(), hd.getId());
-        pf.addAndCreatePhone(3, new Phone("666","Mobil"));
+        pf.addAndCreatePhone(11, new Phone("666","Mobil"));
 //        FacadeExample fe = FacadeExample.getFacadeExample(emf);
 //        fe.create(new RenameMeDTO(new RenameMe("First 1", "Last 1")));
 //        fe.create(new RenameMeDTO(new RenameMe("First 2", "Last 2")));
