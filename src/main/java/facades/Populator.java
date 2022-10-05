@@ -26,12 +26,12 @@ public class Populator {
         HobbyFacade hf = HobbyFacade.getInstance(emf);
         Cityinfo ci = new Cityinfo("Testbybla", "3700"); //TODO: find en by der findes istedet for og brug den... din abe...
         Address a = new Address("Testgade 17", "Th.", ci);
-        HobbyDTO hd = hf.getHobbyDTOById(122);
+        HobbyDTO hd = hf.getHobbyDTOById(23);
         Set<Phone> ps = new HashSet<>();
-        Person p = new Person(a,"Ib", "Ibsen", 47, "Female", "iby@nicemail.com");
+        Person p = new Person(a,"Jane", "Janson", 47, "Female", "iby@nicemail.com");
         PersonDTO pd = pf.create(p);
         pf.addHobby(pd.getId(), hd.getId());
-        pf.addAndCreatePhone(10, new Phone("123456","Mobil"));
+        pf.addAndCreatePhone(3, new Phone("666","Mobil"));
 //        FacadeExample fe = FacadeExample.getFacadeExample(emf);
 //        fe.create(new RenameMeDTO(new RenameMe("First 1", "Last 1")));
 //        fe.create(new RenameMeDTO(new RenameMe("First 2", "Last 2")));
