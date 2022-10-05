@@ -4,10 +4,7 @@ import dtos.PersonDTO;
 import entities.*;
 import utils.EMF_Creator;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.ws.rs.WebApplicationException;
 import java.util.*;
 
@@ -79,19 +76,43 @@ public class PersonFacade
 
     public PersonDTO createPerson(PersonDTO personDTO)
     {
-        Address address = createAdress(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())));
+        Cityinfo ci = findCityInfo(new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode()));
+        Address address = createAdress(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), ci));
         Person person = new Person(address, personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(), personDTO.getGender(), personDTO.getEmail());
 
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(person);
+            em.merge(person);
             em.flush(); //Behandel JPA som et offenligt toilet
             em.getTransaction().commit();
         } finally {
             em.close();
         }
         return new PersonDTO(person);
+    }
+
+    private Cityinfo findCityInfo(Cityinfo cityinfo)
+    {
+        EntityManager em = getEntityManager();
+        Cityinfo result;
+        try {
+            TypedQuery<Cityinfo> query = em.createQuery("select ci from Cityinfo ci where ci.city = :city and ci.zipcode = :zipcode", Cityinfo.class);
+            query.setParameter("zipcode", cityinfo.getZipcode());
+            query.setParameter("city", cityinfo.getCity());
+            result = query.getSingleResult();
+            return result;
+
+        } catch (NoResultException e) {
+//            em.getTransaction().begin();
+//            em.persist(address);
+//            em.flush(); //Behandel JPA som et offenligt toilet
+//            em.getTransaction().commit();
+            System.out.println("Stop dig selv... det virker... gider ikke mer'");
+        } finally {
+            em.close();
+        }
+        return cityinfo;
     }
 
     private Address createAdress(Address address)
@@ -105,10 +126,13 @@ public class PersonFacade
             query.setParameter("city", address.getIdCITY().getCity());
             query.setParameter("aditionalInfo", address.getAditionalInfo());
             query.setParameter("street", address.getStreet());
-            result = query.getSingleResult();
-            return result;
+            List<Address> addressList = query.getResultList();
+            if (addressList.size() == 0)
+                throw new Exception("Address not found");
+            else
+                return addressList.get(0);
 
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             em.getTransaction().begin();
             em.persist(address);
             em.flush(); //Behandel JPA som et offenligt toilet

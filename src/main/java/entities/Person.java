@@ -56,7 +56,7 @@ public class Person
 //    private Address address;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idADDRESS", nullable = false)
     private Address idADDRESS;
 

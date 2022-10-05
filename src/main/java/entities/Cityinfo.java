@@ -12,7 +12,6 @@ import java.util.Set;
 public class Cityinfo
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCITY", nullable = false)
     private Integer id;
 
@@ -31,6 +30,13 @@ public class Cityinfo
 
     public Cityinfo()
     {
+    }
+
+    public Cityinfo(Integer id, String city, String zipcode)
+    {
+        this.id = id;
+        this.city = city;
+        this.zipcode = zipcode;
     }
 
     public Cityinfo(String city, String zipcode)

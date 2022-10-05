@@ -34,17 +34,17 @@ Content-Type: application/json
 
 {
   "address": {
-    "street": "Nickigade 10",
+    "street": "Timigade 10",
     "aditionalInfo": "Tv.",
     "idCITY": {
-      "city": "Nylars",
-      "zipcode": "3711"
+      "city": "Rønne",
+      "zipcode": "3700"
     }
   },
-  "firstName": "Tim",
-  "lastName": "Timsen",
-  "age": 27,
-  "gender": "FeMale",
+  "firstName": "Tommy",
+  "lastName": "Tomsen",
+  "age": 67,
+  "gender": "MaleFe",
   "email": "tim@tim.com"
 }
 
