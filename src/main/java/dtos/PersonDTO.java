@@ -352,6 +352,13 @@ public class PersonDTO implements Serializable
             this.idPERSON = p.getIdPERSON().getId();
         }
 
+        public static List<PhoneDTO> getDTOs(List<Phone> p)
+        {
+            List<PhoneDTO> phoneDTOS = new ArrayList<>();
+            p.forEach(phone -> phoneDTOS.add(new PhoneDTO(phone)));
+            return phoneDTOS;
+        }
+
         public String getPhoneNumber()
         {
             return phoneNumber;

@@ -29,7 +29,7 @@ GET http://localhost:8080/hobbies/api/person/zipcode/3700
 Content-Type: application/json
 
 ### Update person
-PUT http://localhost:8080/hobbies/api/person/update/10
+PUT http://localhost:8080/hobbies/api/person/update/8
 Content-Type: application/json
 
 {

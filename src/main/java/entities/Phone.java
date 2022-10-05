@@ -21,11 +21,11 @@ public class Phone
     private String description;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idPERSON", nullable = false)
     private Person idPERSON = new Person();
 
-    private Integer idPERSONInt;
+//    private Integer idPERSONInt;
 
     public Phone()
     {
@@ -50,12 +50,12 @@ public class Phone
         this.idPERSON = idPERSON;
     }
 
-    public Phone(String phoneNumber, String description, Integer idPERSONInt)
-    {
-        this.phoneNumber = phoneNumber;
-        this.description = description;
-        this.idPERSONInt = idPERSONInt;
-    }
+//    public Phone(String phoneNumber, String description, Integer idPERSONInt)
+//    {
+//        this.phoneNumber = phoneNumber;
+//        this.description = description;
+//        this.idPERSONInt = idPERSONInt;
+//    }
 
     public String getPhoneNumber()
     {
