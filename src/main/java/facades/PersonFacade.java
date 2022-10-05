@@ -6,6 +6,7 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.WebApplicationException;
 import java.util.*;
@@ -79,7 +80,7 @@ public class PersonFacade
     public PersonDTO createPerson(PersonDTO personDTO)
     {
         Address address = createAdress(new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAditionalInfo(), new Cityinfo(personDTO.getAddress().getIdCITY().getCity(), personDTO.getAddress().getIdCITY().getZipcode())));
-        Person person = new Person(address, personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(),personDTO.getGender(),personDTO.getEmail());
+        Person person = new Person(address, personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAge(), personDTO.getGender(), personDTO.getEmail());
 
         EntityManager em = getEntityManager();
         try {
@@ -96,7 +97,18 @@ public class PersonFacade
     private Address createAdress(Address address)
     {
         EntityManager em = getEntityManager();
+        Address result;
         try {
+            TypedQuery<Address> query = em.createQuery("select ad from Address ad join Cityinfo c where c.id = :id and c.zipcode = :zipcode and c.city = :city and ad.aditionalInfo = :aditionalInfo and ad.street = :street", Address.class);
+            query.setParameter("id", address.getIdCITY().getId());
+            query.setParameter("zipcode", address.getIdCITY().getZipcode());
+            query.setParameter("city", address.getIdCITY().getCity());
+            query.setParameter("aditionalInfo", address.getAditionalInfo());
+            query.setParameter("street", address.getStreet());
+            result = query.getSingleResult();
+            return result;
+
+        } catch (NoResultException e) {
             em.getTransaction().begin();
             em.persist(address);
             em.flush(); //Behandel JPA som et offenligt toilet
@@ -280,9 +292,9 @@ public class PersonFacade
         person = em.find(Person.class, p.getId());
 
         Set<Phone> phoneSet = new LinkedHashSet<>();
-            p.getPhones().forEach(phone -> {
-                phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person));
-            });
+        p.getPhones().forEach(phone -> {
+            phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person));
+        });
 ////        for (PersonDTO.PhoneDTO phone : p.getPhones()) {
 ////            phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person));
 ////        }
