@@ -41,7 +41,7 @@ public class Person
     @Column(name = "email", nullable = false, length = 45)
     private String email;
 
-    @OneToMany(mappedBy = "idPERSON", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "idPERSON", cascade = CascadeType.ALL)
     private Set<Phone> phones = new LinkedHashSet<>();
 
     @ManyToMany(cascade = CascadeType.PERSIST)

@@ -66,9 +66,20 @@ public class PersonResource
     public String update(@PathParam("id") int id, String input){
         PersonDTO personDTO = GSON.fromJson(input, PersonDTO.class);
         personDTO.setId(id);
-        personDTO = FACADE.editPerson(personDTO);
-        return GSON.toJson(personDTO);
+        PersonDTO edited = FACADE.updatePerson(personDTO);
+        edited = FACADE.updateAddress(personDTO);
+        edited = FACADE.updatePhone(personDTO);
+        return GSON.toJson(edited);
     }
+
+//  @PUT
+//        @Path("addPhone/{id}")
+//        @Consumes({MediaType.APPLICATION_JSON})
+//        @Produces({MediaType.APPLICATION_JSON})
+//        public String addPhone(@PathParam("id") int id, String input)
+//        {
+//
+//        }
 
     @DELETE
     @Produces({MediaType.APPLICATION_JSON})

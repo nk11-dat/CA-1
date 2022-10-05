@@ -37,7 +37,7 @@ public class Hobby
     @Column(name = "type", nullable = false, length = 45)
     private String type;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "PERSON_has_HOBBY",
             joinColumns = @JoinColumn(name = "HOBBY_idHOBBY"),
             inverseJoinColumns = @JoinColumn(name = "PERSON_idPERSON"))

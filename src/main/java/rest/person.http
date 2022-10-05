@@ -21,7 +21,7 @@ GET http://localhost:8080/hobbies/api/person/all
 Content-Type: application/json
 
 ### Get person by phone number
-GET http://localhost:8080/hobbies/api/person/phone/66699666
+GET http://localhost:8080/hobbies/api/person/phone/123456
 Content-Type: application/json
 
 ### Get persons by zipcode
@@ -29,28 +29,28 @@ GET http://localhost:8080/hobbies/api/person/zipcode/3700
 Content-Type: application/json
 
 ### Update person
-PUT http://localhost:8080/hobbies/api/person/update/3
+PUT http://localhost:8080/hobbies/api/person/update/1
 Content-Type: application/json
 
 {
   "address": {
-    "street": "Testgade 14",
-    "aditionalInfo": "Th.",
+    "street": "Nickigade 10",
+    "aditionalInfo": "Tv.",
     "idCITY": {
-      "city": "København K",
-      "zipcode": "1353"
+      "city": "Nylars",
+      "zipcode": "3711"
     }
   },
-  "firstName": "Bimbam",
-  "lastName": "Karlos",
-  "age": 36,
-  "gender": "Male",
+  "firstName": "Mikkel",
+  "lastName": "Otto",
+  "age": 22,
+  "gender": "FeMale",
   "email": "bimbam@nicemail.com",
   "phones": [
     {
-      "phoneNumber": "25255878",
+      "phoneNumber": "10101212",
       "description": "Mobil",
-      "idPERSON": 3
+      "idPERSON": 1
     }
   ],
   "hobbies": [
@@ -66,5 +66,5 @@ Content-Type: application/json
 }
 
 ### Delete person
-DELETE http://localhost:8080/hobbies/api/person/delete/8
+DELETE http://localhost:8080/hobbies/api/person/delete/9
 Accept: application/json
