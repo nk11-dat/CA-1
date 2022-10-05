@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name = "Address.deleteAllRows", query = "DELETE from Address")
 @Table(name = "ADDRESS")
 public class Address
 {
@@ -26,7 +27,7 @@ public class Address
     private String aditionalInfo;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)//, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idCITY", nullable = false)
     private Cityinfo idCITY;
 

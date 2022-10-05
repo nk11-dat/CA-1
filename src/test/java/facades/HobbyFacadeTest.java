@@ -49,12 +49,16 @@ class HobbyFacadeTest
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Cityinfo.deleteAllRows").executeUpdate();
 
-            Cityinfo ci = new Cityinfo("IbBy", "6969");
-            Address a1 = new Address("Testgade 16", "Tv.", ci);
-            Address a2 = new Address("Testgade 17", "basement", ci);
+            Cityinfo ci1 = new Cityinfo(33, "IbBy", "6969");
+            Cityinfo ci2 = new Cityinfo(34, "IbBy", "6969");
+            Address a1 = new Address("Testgade 16", "Tv.", ci1);
+            Address a2 = new Address("Testgade 17", "basement", ci2);
             p1 = new Person(a1, "Frida", "Fridason", 27, "Female", "Frida@Fridason.dk");
-            p2 = new Person(a1, "Gunter", "Gunterson", 33, "Male", "Gunter@Gunterson.no");
+            p2 = new Person(a2, "Gunter", "Gunterson", 33, "Male", "Gunter@Gunterson.no");
 
             h1 = new Hobby("3D-udskrivning", "https://en.wikipedia.org/wiki/3D_printing", "Generel", "Indendørs");
             h2 = new Hobby("Akrobatik", "https://en.wikipedia.org/wiki/Acrobatics", "Generel", "Indendørs");

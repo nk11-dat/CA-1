@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name = "Cityinfo.deleteAllRows", query = "DELETE from Cityinfo")
 @Table(name = "CITYINFO")
 public class Cityinfo
 {
