@@ -34,20 +34,19 @@ Content-Type: application/json
 
 {
   "address": {
-    "street": "Timigade 10",
-    "aditionalInfo": "Tv.",
+    "street": "fdgdf 5",
+    "aditionalInfo": "sfskt",
     "idCITY": {
       "city": "Rønne",
       "zipcode": "3700"
     }
   },
-  "firstName": "Tommy",
-  "lastName": "Tomsen",
-  "age": 67,
-  "gender": "MaleFe",
-  "email": "tim@tim.com"
+  "firstName": "Titott",
+  "lastName": "VilVæreFærdigtt",
+  "age": "58",
+  "gender": "Malerr",
+  "email": "minMail@dinMail.c"
 }
-
 
 ### Update person
 PUT http://localhost:8080/hobbies/api/person/update/8
