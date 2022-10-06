@@ -5,12 +5,12 @@ import com.google.gson.GsonBuilder;
 import dtos.HobbyDTO;
 import dtos.PersonDTO;
 import facades.HobbyFacade;
-import facades.PersonFacade;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 //Todo Remove or change relevant parts before ACTUAL use
@@ -45,7 +45,20 @@ public class HobbyResource
     public String getAll(@PathParam("hobbyname") String hobbyname)
     {
         List<HobbyDTO> allHobbiesDTO = FACADE.getHobbyDTOByName(hobbyname);
+//        Teststuff allDaStuff = new Teststuff(allHobbiesDTO);
+//        String temp = GSON.toJson(allDaStuff);
+//        return temp;
         return GSON.toJson(allHobbiesDTO);
+    }
+
+    public class Teststuff
+    {
+        List<HobbyDTO> all = new ArrayList<>();
+
+        public Teststuff(List<HobbyDTO> all)
+        {
+            this.all = all;
+        }
     }
 
     @Path("people/{hobbyname}")
