@@ -19,7 +19,7 @@ GET http://localhost:8080/hobbies/api/hobbies/people/Tegning
 Content-Type: application/json
 
 ###Get people count with hobby
-GET http://localhost:8080/hobbies/api/hobbies/people/count/Tegning
+GET http://localhost:8080/hobbies/api/hobbies/people/count/Bil
 Content-Type: application/json
 
 ### create a new hobby
@@ -34,7 +34,7 @@ Content-Type: application/json
       "type": "open fields"
 }
 ### edit a hobby
-PUT http://localhost:8080/hobbies/api/hobbies/edit/453
+PUT http://localhost:8080/hobbies/api/hobbies/edit/465
 #POST http://localhost:8080/devops-starter/api/person
 Content-Type: application/json
 

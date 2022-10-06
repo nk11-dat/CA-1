@@ -87,5 +87,5 @@ Content-Type: application/json
 }
 
 ### Delete person
-DELETE http://localhost:8080/hobbies/api/person/delete/9
+DELETE http://localhost:8080/hobbies/api/person/delete/18
 Accept: application/json
