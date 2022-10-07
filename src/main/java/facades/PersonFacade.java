@@ -319,42 +319,11 @@ public class PersonFacade
         p.getPhones().forEach(phone -> {
             phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person));
         });
-////        for (PersonDTO.PhoneDTO phone : p.getPhones()) {
-////            phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person));
-////        }
+
         System.out.println();
 
-//        em.getTransaction().begin();
-
-//            List<innerPersonDTO> listOfPeople = innerPersonDTO.getDTOs(persons);
-//        if (person == null)
-//            throw new WebApplicationException("Person with id: " + p.getId() + " dosesn't exist.");
-//        Set<Phone> phoneSet = new HashSet<>();
-//            person.getPhones().forEach(phone -> {
-//                phoneSet.add(new Phone(phone.getPhoneNumber(), phone.getDescription(), person.getId()));
-//            });
-//            person.getPhones().stream().toList();
-//            person.setPhones(phoneSet);
         try {
             em.getTransaction().begin();
-//            TypedQuery<Phone> query = em.createQuery("select pho from Phone pho where pho.idPERSON = :id", Phone.class);
-//            query.setParameter("id", person);
-//            List<Phone> phones = query.getResultList();
-//            List<PersonDTO.PhoneDTO> dtos = new ArrayList<>();
-//            p.getPhones().forEach(phoneDTO -> {
-//                dtos.add(phoneDTO);
-//            });
-//
-//            for (int i = 0; i < dtos.size(); i++) {
-//                if (i > phones.size())
-//                    phones.add(new Phone(dtos.get(i).getPhoneNumber(), dtos.get(i).getDescription(), person));
-//                else {
-//                    phones.get(i).setPhoneNumber(dtos.get(i).getPhoneNumber());
-//                    phones.get(i).setDescription(dtos.get(i).getDescription());
-//                }
-//            }
-//            List<PersonDTO.PhoneDTO> phoneDTOs = PersonDTO.PhoneDTO.getDTOs(person.getPhones());
-//            em.flush();
             person.getPhones().forEach(phone -> {
                 em.remove(phone);
             });
